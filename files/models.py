@@ -1,3 +1,4 @@
+
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser
@@ -69,7 +70,7 @@ class File(models.Model):
     #dosya = models.FileField(upload_to='uploads/', blank=True, null=True)
 
     # avukat silinince dosya da silinecek
-    lawyer = models.ForeignKey(Lawyer, on_delete=models.CASCADE)
+    lawyer = models.ForeignKey(Lawyer,null=True, blank=True,on_delete=models.SET_NULL)
 
     def __str__(self):
         return f"{self.basvuran} {self.basvurulan}"

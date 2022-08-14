@@ -18,8 +18,9 @@
       <h6 class="mb-0 font-bold capitalize">Dashboard</h6>
     </nav>
 
-    <div class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
+    
       {% if not request.user.is_authenticated %}
+      <div class="flex items-center md:ml-auto md:pr-4">
       <li class="flex items-center">
         <a href="{% url 'login' %}"
           class="block px-0 py-2 font-semibold transition-all ease-nav-brand text-size-sm text-slate-500">

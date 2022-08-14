@@ -136,6 +136,7 @@
           >
             <thead>
               <tr>
+                <th data-priority="0">Id</th>
                 <th data-priority="1">Dosya No</th>
                 <th data-priority="2">Başvuran</th>
                 <th data-priority="3">Başvurulan</th>
@@ -150,6 +151,7 @@
             <tbody>
               {% for file in files%}
               <tr>
+                <td>{{file.id}}</td>
                 <td>{{file.dosya_no}}</td>
                 <td>{{file.basvuran}}</td>
                 <td>{{file.basvurulan}}</td>

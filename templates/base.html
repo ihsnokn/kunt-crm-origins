@@ -41,6 +41,7 @@
     {% include "navbar.html" %}
 
     <div class="w-full px-6 py-6 mx-auto">
+      {% include "messages.html" %}
       {% block content %} {% endblock content %}
 
     </div>
@@ -52,6 +53,9 @@
   <div>
     {% include "fixed.html" %}
   </div>
+
+
+   {% block scripts %} {% endblock  %}
 </body>
 {% include "scripts.html" %}
 
