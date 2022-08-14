@@ -43,7 +43,7 @@
     <label for="id_dosya_durumu"> Dosya durumu:</label>
 
 
-    <select class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft  inline w-full  appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" name="dosya_durumu" id="id_dosya_durumu">
+    <select class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft inline appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" name="dosya_durumu" id="id_dosya_durumu">
         <option value="" selected >--------</option>
     {% for dosya_durumu in dosya_durumları  %}
 
@@ -54,7 +54,7 @@
 
       <label for="id_lawyer"> Lawyer:</label>
 
-        <select name="lawyer" required="" id="id_lawyer">
+        <select name="lawyer" required="" id="id_lawyer" class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft inline appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none">
         <option value="" selected="">---------</option>
               {% for lawyer in lawyers  %}
         <option value="{{lawyer.id}}">{{lawyer.user}}</option>

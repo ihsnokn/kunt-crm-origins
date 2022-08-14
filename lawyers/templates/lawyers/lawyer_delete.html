@@ -6,7 +6,22 @@
         <h1>Avukatı silmek istediğine emin misin? </h1>
         <form method="post" >
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">SİL</button>
+
+        
+            <div class="bg-white rounded shadow-lg border flex flex-col overflow-hidden px-10 py-10 w-3/5 mx-auto">
+                
+                <div class="text-center py-6 text-2xl text-gray-700">Avukatı Silmek İstediğine Emin Misin?</div>
+                <div class="text-center font-light text-gray-700 mb-8">
+                    Avukatı silersen avukatu ve avukatın dosyaları kalıcı olarak silinir...
+                </div>
+                <div class="flex justify-center">
+                    <button
+                        type="buttin" class="bg-gray-300 text-gray-900 rounded hover:bg-red-400 px-6 py-2 focus:outline-none mx-1">Sil</button>
+                   
+                </div>
+            </div>
+        
+            
+            
         </form>
 {% endblock content %}

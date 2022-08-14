@@ -13,9 +13,7 @@
             <a href="{% url 'lawyers:lawyer-detail' lawyer.pk %}"class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">
             Avukat Detayı
             </a>
-            <a class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">
-            Reviews
-            </a>
+            
             <a href="{% url 'lawyers:lawyer-update' lawyer.pk %}" class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1">
             Güncelle
             </a>
@@ -23,13 +21,13 @@
           <form method="post" >
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Yükle</button>
+            <button type="submit" class="inline-block px-6 py-3 mr-3 font-bold text-center text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-gradient-fuchsia leading-pro text-size-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 hover:scale-102 active:opacity-85 hover:shadow-soft-xs">Yükle</button>
         </form>
           <a href="{% url 'lawyers:lawyer-delete' lawyer.pk %}" class="w-1/2 mt-3 flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
           Avukatı Sil
           </a>
         </div>
-        <img alt="ecommerce" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src="https://dummyimage.com/400x400">
+        <img alt="ecommerce" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src="../../../static/img/man.png">
       </div>
     </div>
   </section>
