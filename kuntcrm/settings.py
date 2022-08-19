@@ -3,13 +3,9 @@ import os
 import environ
 from pathlib import Path
 
-env = environ.Env(
-    DEBUG=(bool, False)
-)
+env = environ.Env()
 
-READ_DOT_ENV_FILE = env.bool('READ_DOT_ENV_FILE', default=False)
-if READ_DOT_ENV_FILE:
-    environ.Env.read_env()
+environ.Env.read_env()
 
 
 DEBUG = env('DEBUG')
@@ -19,9 +15,9 @@ SECRET_KEY = env('SECRET_KEY')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ALLOWED_HOSTS = ['127.0.0.1']
-ALLOWED_HOSTS = ["*"]
-#'kunt-crm-b78t7.ondigitalocean.app', 
+#ALLOWED_HOSTS = ['kunt-crm-b78t7.ondigitalocean.app', '127.0.0.1']
+
+
 # Application definition
 
 INSTALLED_APPS = [
