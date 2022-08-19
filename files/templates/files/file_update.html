@@ -213,6 +213,7 @@
 
 
 {% block scripts %}
+
 <script>
 
 
@@ -272,36 +273,77 @@ for(var i=0; inputElements[i]; ++i){
           
       }
     }
-   console.log(file_array)   
-
-   var url = 'https://kunt-crm-b78t7.ondigitalocean.app/files/file-delete-update/'
- fetch(url, {
-                method:'POST',
-                headers:{
-                    'Content-type':'application/json',
-                    'X-CSRFToken':csrftoken,
-                },
-                body:JSON.stringify({'file_array':file_array})
-            }
-            ).then(res => console.log(res)
-            ).catch(err => console.log(err))
+   //console.log(file_array)   
 
 
 
 
 
-        location.reload();
+
+          //  location.reload();
+        
 
       
-
+    deleteFetch(file_array)
 
 
 
  });
 
+function deleteFetch(file_array){
+   //var url = 'https://kunt-crm-b78t7.ondigitalocean.app/files/file-delete-update/'
+  var url = 'http://localhost:8000/files/file-delete-update/'
+  fetch(url, {
+                 method:'POST',
+                 headers:{
+                     'Content-type':'application/json',
+                     'X-CSRFToken':csrftoken,
+                 },
+                 body:JSON.stringify({'file_array':file_array})
+             })
+             .then(res => console.log(res))
+             .then(res => reloadPage())
+             .catch(err => console.log(err))
+             
+ 
+
+
+}
+
+function reloadPage(){
+  location.reload();
+
+}
+
+// let message_div= document.getElementById("MasterContainer")
+
+// let  div1 = document.createElement("div");
+// let  strong1 = document.createElement("strong");
+// let  span1 = document.createElement("span");
+// let  svg1 = document.createElement("svg");
+// div1.className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mb-3 rounded relative"
+// strong1.className="font-bold"
+// strong1.innerHTML="Seçilen dosyalar başarılı bir şekilde silindi"
+// svg1.className="fill-current h-6 w-6 text-red-500"
+// span1.className="absolute top-0 bottom-0 right-0 px-4 py-3"
+// span1.appendChild(svg1);
+// div1.appendChild(strong1);
+// div1.appendChild(span1);
+// message_div.appendChild(div1);
+// console.log(message_div)
+
+
+
+// span.onclick=function(){this.parentElement.style.display='none';}
+// console.log(div)
+
+
 
 
   </script>
+
+
+
 
 
 
