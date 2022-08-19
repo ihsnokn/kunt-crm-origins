@@ -6,4 +6,4 @@ python manage.py makemigrations
 
 python manage.py migrate
 
-gunicorn --worker-tmp-dir /dev/shm kuntcrm.wsgi
+gunicorn --worker-tmp-dir /tmp kuntcrm.wsgi

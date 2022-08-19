@@ -32,32 +32,50 @@
           <span class="ml-auto text-gray-900">{{file.basvuran}}</span>
         </div>
         <div class="flex border-t border-gray-200 py-2">
-          <span class="text-gray-500">Başvurulan</span>
-          <span class="ml-auto text-gray-900">{{file.basvurulan}}</span>
+          <span class="text-gray-500">Davalı</span>
+          <span class="ml-auto text-gray-900">{{file.get_davali_display}}</span>
         </div>
         <div class="flex border-t  border-gray-200 py-2">
           <span class="text-gray-500">Plaka</span>
           <span class="ml-auto text-gray-900">{{file.plaka}}</span>
         </div>
+
+        <div class="flex border-t border-gray-200 py-2">
+          <span class="text-gray-500">Kaza Tarihi</span>
+          <span class="ml-auto text-gray-900">{{file.kaza_tarihi|date:"d/m/y"}}</span>
+        </div>
+
         <div class="flex border-t border-gray-200 py-2">
           <span class="text-gray-500">Dava Tarihi</span>
           <span class="ml-auto text-gray-900">{{file.dava_tarihi|date:"d/m/y"}}</span>
         </div>
+
+
+
+
+
         <div class="flex border-t border-gray-200 py-2">
           <span class="text-gray-500">Dosya Durumu</span>
-          <span class="ml-auto text-gray-900">{{file.dosya_durumu}}</span>
+       
+          <span class="ml-auto text-gray-900">{{file.get_dosya_durumu_display}}</span>
+
         </div>
+
+
+
+
+
         <div class="flex border-t border-gray-200 py-2">
           <span class="text-gray-500">Başvuru Konusu</span>
-          <span class="ml-auto text-gray-900">{{file.basvuru_konusu}}</span>
+          
+          <span class="ml-auto text-gray-900">{{file.get_basvuru_konusu_display}}</span> 
+
+
         </div>
-        <div class="flex border-t  border-gray-200 py-2">
-          <span class="text-gray-500">Oluşturan</span>
-          <span class="ml-auto text-gray-900">{{file.olusturan}}</span>
-        </div>
+
         <div class="flex border-t border-b mb-6 border-gray-200 py-2">
-          <span class="text-gray-500">Sorumlu Avukat</span>
-          <span class="ml-auto text-gray-900">{{file.lawyer}}</span>
+          <span class="text-gray-500">İşlem Yapan</span>
+          <span class="ml-auto text-gray-900">{{file.lawyer.user.username}}</span>
         </div>
         <div class="flex border-t border-b mb-6 border-gray-200 py-2">
           <span class="text-gray-500">Dosya Sayısı</span>
@@ -118,7 +136,6 @@
     </div>
   </div>
 </section>
-
 
 
 

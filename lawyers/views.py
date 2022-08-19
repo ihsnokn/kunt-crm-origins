@@ -3,12 +3,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import reverse
 from files.models import Lawyer
 from .forms import LawyerModelForm
+from django.contrib.auth.decorators import user_passes_test,login_required
 
 class LawyerListView(LoginRequiredMixin ,generic.ListView):
     template_name = "lawyers/lawyer_list.html"
 
     def get_queryset(self):
         return Lawyer.objects.all()
+
 
 class LawyerCreateView(LoginRequiredMixin, generic.CreateView):
     template_name = "lawyers/lawyer_create.html"
@@ -22,6 +24,7 @@ class LawyerCreateView(LoginRequiredMixin, generic.CreateView):
         lawyer.organisation = self.request.user.userprofile
         lawyer.save()
         return super(LawyerCreateView, self).form_valid(form)
+
 
 class LawyerDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "lawyers/lawyer_detail.html"

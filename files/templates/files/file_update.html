@@ -28,31 +28,80 @@
   {% csrf_token %}
   <div>
     <label for="id_dosya_no">Dosya no:</label>   
-      <input type="number" name="dosya_no" value="{{file.dosya_no}}" min="0" max="9999999999" placeholder="Dosya No" class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" required="" id="id_dosya_no">
+      <input type="text" name="dosya_no" value="{{file.dosya_no}}" min="0" max="9999999999" placeholder="Dosya No" class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" required="" id="id_dosya_no">
     <label for="id_basvuran">Basvuran:</label>
 
       <input type="text" value="{{file.basvuran}}" name="basvuran" id="id_basvuran" placeholder="Başvuran" maxlength="30" class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none">
 
-    <label for="id_basvurulan">Basvurulan:</label>
-    
-      
-      <input type="text" value="{{file.basvurulan}}" name="basvurulan" id="id_basvurulan" placeholder="Başvurulan" maxlength="30" class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none">
+
+
+   
+      {% comment %} <input type="text" value="{{file.basvurulan}}" name="basvurulan" id="id_basvurulan" placeholder="Başvurulan" maxlength="30" class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"> {% endcomment %}
+
+ <label for="id_basvurulan">Davalı:</label>   
+    <select class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft inline appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" name="davali" id="id_davali">
+
+
+    {% for davalı in davalılar %}
+        {% if  davalı.0 ==  file.davali %}
+        <option value="{{davalı.0}}" selected > {{davalı.1}}</option> 
+        {% else %}
+        <option value="{{davalı.0}}">{{davalı.1}}</option>
+        {% endif %}
+
+    {% endfor %}
+
+    </select>
+
+
+
+
+
+
+
+
 
     <label for="id_plaka">Plaka:</label>
 
       <input type="text" value="{{file.plaka}}" name="plaka" id="id_plaka" maxlength="10" placeholder="Plaka" maxlength="30" class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none">
 
-    <label for="id_basvuru_konusu">Basvuru konusu:</label>
-    
-      
-      <textarea name="basvuru_konusu" value="" rows="3" maxlength="150" placeholder="Başvuru Konusunu Giriniz..."  id="id_basvuru_konusu" class="focus:shadow-soft-primary-outline min-h-unset text-size-sm leading-5.6 ease-soft block h-auto w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none">{{file.basvuru_konusu}}</textarea>
 
-    <label for="id_olusturan">Olusturan:</label>
-    
-      
-    <input type="text"  value="{{file.olusturan}}" name="olusturan" id="id_olusturan" maxlength="30" placeholder="Oluşturan"  class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none">
+<div class="py-2">
+   <label for="id_basvuru_konusu">Basvuru konusu:</label>
+    <select class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" name="basvuru_konusu" id="id_basvuru_konusu">
+
+
+    {% for basvuru_konusu in basvuru_konuları %}
+        {% if  basvuru_konusu.0 ==  file.basvuru_konusu %}
+        <option value="{{basvuru_konusu.0}}" selected > {{basvuru_konusu.1}}</option> 
+        {% else %}
+      <option value="{{basvuru_konusu.0}}">{{basvuru_konusu.1}}</option>
+        {% endif %}
+
+    {% endfor %}
+
+    </select>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
       
 <div class="px-3 py-2">
+
+    <label for="id_kaza_tarihi">Kaza tarihi:</label>
+
+      <input type="date" value="{{file.kaza_tarihi|date:"Y-m-d" }}" name="kaza_tarihi" id="id_kaza_tarihi"  placeholder="Kaza Tarihi"  class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft inline appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none">
+
+ <br>
 
     <label for="id_dava_tarihi">Dava tarihi:</label>
 
@@ -75,7 +124,7 @@
 
     </select>
 <br>
-      <label for="id_lawyer"> Lawyer:</label>
+      <label for="id_lawyer"> İşlem Yapan:</label>
 
         <select name="lawyer" required="" id="id_lawyer" class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft inline appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none">
    

@@ -3,21 +3,10 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser
 from django import forms
+from .choises import SOURCE_CHOICES,BASVURU_CHOICES,DAVALI_CHOICES
 import os
 
-SOURCE_CHOICES = (
-        # database name and display value respectively
-        ('evrak_bekleyen', 'Evrak Bekleyen'),
-        ('talep', 'Talep'),
-        ('dava_acilacak', 'Dava Açılacak'),
-        ('ara_karar', 'Ara Karar'),
-        ('bilir_kisi_raporu', 'Bilir Kişi Raporu'),
-        ('karar', 'Karar'),
-        ('icra', 'İcra'),
-        ('odeme_bekleyen', 'Ödeme Bekleyen'),
-        ('kapanis', 'Kapanış'),
-        ('ikinci_talep', '2. Talep'),
-    )
+
 
 class User(AbstractUser):  # auth.models in prebuild user modeli
     pass
@@ -42,32 +31,24 @@ class Lawyer(models.Model):
 
 class File(models.Model):
 
-    # SOURCE_CHOICES = (
-    #     # database name and display value respectively
-    #     ('evrak_bekleyen', 'Evrak Bekleyen'),
-    #     ('talep', 'Talep'),
-    #     ('dava_acilacak', 'Dava Açılacak'),
-    #     ('ara_karar', 'Ara Karar'),
-    #     ('bilir_kisi_raporu', 'Bilir Kişi Raporu'),
-    #     ('karar', 'Karar'),
-    #     ('icra', 'İcra'),
-    #     ('odeme_bekleyen', 'Ödeme Bekleyen'),
-    #     ('kapanis', 'Kapanış'),
-    #     ('ikinci_talep', '2. Talep'),
-    # )
-
-    dosya_no = models.BigIntegerField(default=0)
+   
+    dosya_no = models.CharField(max_length=12)
     basvuran = models.CharField(max_length=30)
-    basvurulan = models.CharField(max_length=30)
+
+    # basvurulan = models.CharField(max_length=30)
+    davali = models.CharField(
+    default='', choices=DAVALI_CHOICES, max_length=100)
+
     plaka = models.CharField(max_length=10)
-    basvuru_konusu = models.TextField(max_length=150)
+
     dava_tarihi = models.DateField(max_length=30, null=True, blank=True)
     dosya_durumu = models.CharField(
     default='', choices=SOURCE_CHOICES, max_length=100)
-    olusturan = models.CharField(max_length=30)
+    basvuru_konusu = models.CharField(
+    default='', choices=BASVURU_CHOICES, max_length=100)
+    kaza_tarihi=models.DateField(max_length=30, null=True, blank=True)
 
-    # File upload handle
-    #dosya = models.FileField(upload_to='uploads/', blank=True, null=True)
+
 
     # avukat silinince dosya da silinecek
     lawyer = models.ForeignKey(Lawyer,null=True, blank=True,on_delete=models.SET_NULL)

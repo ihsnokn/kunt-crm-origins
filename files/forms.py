@@ -9,25 +9,8 @@ from django.utils.translation import gettext_lazy as _
 User = get_user_model()
 
 
-# class FileModelForm(forms.ModelForm):
-#     class Meta:
-#         model = File
-#         fields = (
-#             'dosya_no',
-#             'basvuran',
-#             'basvurulan',
-#             'plaka',
-#             'basvuru_konusu',
-#             'dava_tarihi',
-#             'dosya_durumu',
-#             'olusturan',
-#             'dosya',
-#             'dosya_durumu',
-#             'lawyer'
-#         )
-#         widgets = {'dosya': ClearableFileInput(attrs={'multiple': True}), }
 
-# from .models import Lawyer # sonra bak
+
 
 class FileModelForm(forms.ModelForm):
    # dosya = forms.FileField(
@@ -39,14 +22,14 @@ class FileModelForm(forms.ModelForm):
         fields = (
             'dosya_no',
             'basvuran',
-            'basvurulan',
+            'davali',
             'plaka',
             'basvuru_konusu',
             'dava_tarihi',
             'dosya_durumu',
-            'olusturan',
             'dosya_durumu',
-            'lawyer'
+            'lawyer',
+            'kaza_tarihi'
         )
 
         error_messages = {

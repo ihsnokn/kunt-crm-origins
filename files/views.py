@@ -12,22 +12,11 @@ from django.views.generic.edit import FormView
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 import json
+from django.contrib.auth.decorators import user_passes_test,login_required
 from django.http import JsonResponse
 from django.contrib import messages
+from .choises import SOURCE_CHOICES,BASVURU_CHOICES,DAVALI_CHOICES
 # CRUD create retrieve update delete + list
-SOURCE_CHOICES = (
-        # database name and display value respectively
-        ('evrak_bekleyen', 'Evrak Bekleyen'),
-        ('talep', 'Talep'),
-        ('dava_acilacak', 'Dava Açılacak'),
-        ('ara_karar', 'Ara Karar'),
-        ('bilir_kisi_raporu', 'Bilir Kişi Raporu'),
-        ('karar', 'Karar'),
-        ('icra', 'İcra'),
-        ('odeme_bekleyen', 'Ödeme Bekleyen'),
-        ('kapanis', 'Kapanış'),
-        ('ikinci_talep', '2. Talep'),
-    )
 
 
 class SignUpView(generic.CreateView):
@@ -38,33 +27,17 @@ class SignUpView(generic.CreateView):
         return reverse("login")
 
 # LANDING PAGE VIEW
+
 class LandingPageView(generic.TemplateView):
     template_name = "landing.html"
 
 def landing_page(request):
     return render(request, "landing.html")
 
-# FILE LIST VIEW
-# class FileListView(LoginRequiredMixin, generic.ListView):
-#     template_name = "files/file_list.html"
-#     queryset = File.objects.all().order_by("-id")
-#     context_object_name = "files"
-
-# def file_list(request):
-
-#     files = File.objects.all().order_by("-id")
-#     print(files)
-#     context = {
-#         "files": files
-#     }
-
-#     return render(request, "files/file_list.html", context)
-
 
 
 def FileListView(request):
     files = File.objects.all().order_by("id")
-
     context = {
         "files": files
     }
@@ -76,20 +49,30 @@ def FileListView(request):
 # FILE DETAIL VIEW
 
 def FileDetail(request,id):
+    dosya_durumları=SOURCE_CHOICES
+    basvuru_konuları=BASVURU_CHOICES
+    davalılar=DAVALI_CHOICES
     file = get_object_or_404(File,id = id)
     images = file.image_set.all()
     context = {
         "file": file,
         "images": images,
+        "dosya_durumları": dosya_durumları,
+        "basvuru_konuları": basvuru_konuları,
+        'davalılar':davalılar,
     }
     return render(request, "files/file_detail.html", context)
 
-def FileCreateView(request):
-    
 
+
+
+def FileCreateView(request):
     form=FileModelForm(request.POST or None)
     formimage=ImageForm(request.POST or None)
     dosya_durumları=SOURCE_CHOICES
+    basvuru_konuları=BASVURU_CHOICES
+    davalılar=DAVALI_CHOICES
+    
     lawyers=Lawyer.objects.all()   
     if request.method == 'POST':
         files = request.FILES.getlist("image")
@@ -100,7 +83,7 @@ def FileCreateView(request):
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
         messages.warning(request,"Bir sorun oluştu!")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-    return render(request,"files/file_create.html",{'form':form,'formimage':formimage,'dosya_durumları':dosya_durumları,"lawyers":lawyers})
+    return render(request,"files/file_create.html",{'form':form,'formimage':formimage,'dosya_durumları':dosya_durumları,'davalılar':davalılar,"basvuru_konuları":basvuru_konuları,"lawyers":lawyers})
 
 def sign_out(request):
 	logout(request)
@@ -115,6 +98,8 @@ def FileUpdateView(request,pk):
     images = file.image_set.all()
     formimage=ImageForm(request.POST or None)
     dosya_durumları=SOURCE_CHOICES
+    basvuru_konuları=BASVURU_CHOICES
+    davalılar=DAVALI_CHOICES
     lawyers=Lawyer.objects.all()   
     if request.method == "POST":
         files = request.FILES.getlist("image")
@@ -124,6 +109,7 @@ def FileUpdateView(request,pk):
         if not (form.errors):
             classification_helper(name,files,form)
             messages.success(request,"Dosya başarılı bir şekilde güncellendi.")
+            # return redirect("/files/`{pk}`")
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
             # file = form.save(commit=False)
             # file.save()
@@ -131,13 +117,12 @@ def FileUpdateView(request,pk):
         messages.warning(request,"Bir sorun oluştu!")
         return redirect("/files",{'file':file,'dosya_durumları':dosya_durumları,"lawyers":lawyers,"images": images,})
    
-    return render(request,"files/file_update.html",{'file':file,'dosya_durumları':dosya_durumları,"lawyers":lawyers,"images": images} )
+    return render(request,"files/file_update.html",{'file':file,'dosya_durumları':dosya_durumları,'davalılar':davalılar,"basvuru_konuları":basvuru_konuları,"lawyers":lawyers,"images": images} )
 
 
 
  
 # FILE DELETE VIEW
-
 class FileDeleteView(LoginRequiredMixin, generic.DeleteView):
     template_name = "files/file_delete.html"
     queryset = File.objects.all()
