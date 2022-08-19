@@ -39,7 +39,7 @@
       {% comment %} <input type="text" value="{{file.basvurulan}}" name="basvurulan" id="id_basvurulan" placeholder="Başvurulan" maxlength="30" class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"> {% endcomment %}
 
  <label for="id_basvurulan">Davalı:</label>   
-    <select class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft inline appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" name="davali" id="id_davali">
+    <select class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" name="davali" id="id_davali">
 
 
     {% for davalı in davalılar %}
@@ -92,41 +92,44 @@
 
 
 
+<label for="id_dosya_durumu"> Dosya durumu:</label>
 
+
+<select class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" name="dosya_durumu" id="id_dosya_durumu">
+
+
+{% for dosya_durumu in dosya_durumları %}
+    {% if  dosya_durumu.0 ==  file.dosya_durumu %}
+    <option value="{{dosya_durumu.0}}" selected > {{dosya_durumu.1}}</option> 
+    {% else %}
+  <option value="{{dosya_durumu.0}}">{{dosya_durumu.1}}</option>
+    {% endif %}
+
+{% endfor %}
+
+</select>
 
       
-<div class="px-3 py-2">
+<div class="">
 
     <label for="id_kaza_tarihi">Kaza tarihi:</label>
 
-      <input type="date" value="{{file.kaza_tarihi|date:"Y-m-d" }}" name="kaza_tarihi" id="id_kaza_tarihi"  placeholder="Kaza Tarihi"  class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft inline appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none">
+      <input type="date" value="{{file.kaza_tarihi|date:"Y-m-d" }}" name="kaza_tarihi" id="id_kaza_tarihi"  placeholder="Kaza Tarihi"  class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none">
 
- <br>
+ 
 
+   
+  
+</div>
+  <div class="">
     <label for="id_dava_tarihi">Dava tarihi:</label>
 
-      <input type="date" value="{{file.dava_tarihi|date:"Y-m-d" }}" name="dava_tarihi" id="id_dava_tarihi"  placeholder="Dava Tarihi"  class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft inline appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none">
-  <br>
-    <label for="id_dosya_durumu"> Dosya durumu:</label>
+    <input type="date" value="{{file.dava_tarihi|date:"Y-m-d" }}" name="dava_tarihi" id="id_dava_tarihi"  placeholder="Dava Tarihi"  class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none">
+    
 
-
-    <select class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft inline appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" name="dosya_durumu" id="id_dosya_durumu">
-
-
-    {% for dosya_durumu in dosya_durumları %}
-        {% if  dosya_durumu.0 ==  file.dosya_durumu %}
-        <option value="{{dosya_durumu.0}}" selected > {{dosya_durumu.1}}</option> 
-        {% else %}
-      <option value="{{dosya_durumu.0}}">{{dosya_durumu.1}}</option>
-        {% endif %}
-
-    {% endfor %}
-
-    </select>
-<br>
       <label for="id_lawyer"> İşlem Yapan:</label>
 
-        <select name="lawyer" required="" id="id_lawyer" class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft inline appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none">
+        <select name="lawyer" required="" id="id_lawyer" class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none">
    
               {% for lawyer in lawyers  %}
               {% if lawyer ==  file.lawyer %}
@@ -137,6 +140,7 @@
 
               {% endfor %}
         </select>
+        <br>
   </div>
   </div>
   <div>
@@ -292,7 +296,7 @@ for(var i=0; inputElements[i]; ++i){
 
 function deleteFetch(file_array){
    //var url = 'https://kunt-crm-b78t7.ondigitalocean.app/files/file-delete-update/'
-  var url = 'http://localhost:8000/files/file-delete-update/'
+  var url = '/files/file-delete-update/'
   fetch(url, {
                  method:'POST',
                  headers:{
@@ -341,6 +345,7 @@ function reloadPage(){
 
 
   </script>
+
 
 
 

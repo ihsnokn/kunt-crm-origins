@@ -7,6 +7,7 @@ from . import views
 app_name = "files"
 
 urlpatterns = [
+  path('file-delete-update/', views.FileDeleteUpdate, name='file-delete-update'),
   #  path('', FileListView.as_view(), name='file-list'),
     path('', views.FileListView, name='file-list'),
    # path('<int:pk>/', FileDetailView.as_view(), name='file-detail'),
@@ -15,7 +16,7 @@ urlpatterns = [
     path('<int:pk>/update', views.FileUpdateView, name='file-update'),
     path('<int:pk>/delete', FileDeleteView.as_view(), name='file-delete'),
 
-    path('file-delete-update/', views.FileDeleteUpdate, name='file-delete-update'),
+    
     
     path('create/', views.FileCreateView, name='File_create'),
     path('sign_out/', views.sign_out, name='sign_out'),

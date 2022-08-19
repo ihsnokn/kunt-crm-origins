@@ -13,7 +13,7 @@
 >
   Yeni dosya oluştur.
 </h1>
-
+<div class="container bg-slate-200">
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <div>
@@ -52,7 +52,7 @@
 
 
  <label for="id_basvurulan">Davalı:</label>   
-    <select class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft inline appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" name="davali" id="id_davali">
+    <select class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" name="davali" id="id_davali">
 
   <option value="" selected>--------</option>
     {% for davalı in davalılar %}
@@ -106,30 +106,21 @@
 
 
 
-    <div class="px-3 py-2">
+    <div class=" flex py-2">
       <label for="id_kaza_tarihi">Kaza Tarihi:</label>
+      <br>
       <input
         type="date"
         name="kaza_tarihi"
         id="id_kaza_tarihi"
         placeholder="Kaza Tarihi"
-        class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft inline appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
-      />
-
-      <label for="id_dava_tarihi">Dava tarihi:</label>
-
-      <input
-        type="date"
-        name="dava_tarihi"
-        id="id_dava_tarihi"
-        placeholder="Dava Tarihi"
-        class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft inline appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+        class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft  inline-block  w-1/4    appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
       />
 
       <label for="id_dosya_durumu"> Dosya durumu:</label>
 
       <select
-        class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft inline appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+        class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft inline-block w-1/4 appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
         name="dosya_durumu"
         id="id_dosya_durumu"
       >
@@ -139,6 +130,18 @@
         <option value="{{dosya_durumu.0}}">{{dosya_durumu.1}}</option>
         {% endfor %}
       </select>
+    </div>
+      <div class="flex py-2">
+        <label for="id_dava_tarihi">Dava tarihi:</label>
+
+      <input
+        type="date"
+        name="dava_tarihi"
+        id="id_dava_tarihi"
+        placeholder="Dava Tarihi"
+        class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft inline-block w-1/4 appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+      />
+      
 
       <label for="id_lawyer"> İşlem Yapan:</label>
 
@@ -146,7 +149,7 @@
         name="lawyer"
         required=""
         id="id_lawyer"
-        class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft inline appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+        class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft inline-block w-1/4 appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
       >
         <option value="" selected="">---------</option>
         {% for lawyer in lawyers %}
@@ -168,5 +171,6 @@
     Yükle
   </button>
 </form>
+</div>
 
 {% endblock content %}
