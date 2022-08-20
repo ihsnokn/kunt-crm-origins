@@ -2,12 +2,14 @@ import os
 from .models import File,Image
 from django.conf import settings
 
-def classification_helper(name,files,form):
+def classification_helper(name,files,form,lawyer):
         #class_check=File.objects.filter(name=name).count()
         
         file = form.save(commit=False)
+        file.lawyer=lawyer
         file.save()
         file_name = File.objects.filter(dosya_no=file.dosya_no).first()
+    
         for file in files:
             deneme= Image.objects.create(file_name=file_name, image=file)
             deneme.save()

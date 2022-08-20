@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block content %}
 {% load static %}
-<section class="text-gray-600 body-font overflow-hidden">
+<section class="text-gray-600 body-font overflow-hidden ">
   <div class="container px-5 py-24 pt-8 mx-auto border-2">
     <div class="lg:w-4/5 mx-auto mt-0 flex flex-wrap">
       <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
@@ -23,7 +23,7 @@
             Güncelle
           </a>
         </div>
-        <div class="flex border-t border-gray-200 py-2">
+        <div class="flex border-gray-200 py-2">
           <span class="text-gray-500">Dosya No</span>
           <span class="ml-auto text-gray-900">{{file.dosya_no}}</span>
         </div>
@@ -73,11 +73,11 @@
 
         </div>
 
-        <div class="flex border-t border-b mb-6 border-gray-200 py-2">
+        <div class="flex border-t  border-gray-200 py-2">
           <span class="text-gray-500">İşlem Yapan</span>
           <span class="ml-auto text-gray-900">{{file.lawyer.user.username}}</span>
         </div>
-        <div class="flex border-t border-b mb-6 border-gray-200 py-2">
+        <div class="flex border-t  mb-6 border-gray-200 py-2">
           <span class="text-gray-500">Dosya Sayısı</span>
           
 
@@ -99,7 +99,7 @@
 
         <div class="flex">
           <a
-            class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded" href="{% url 'files:file-list' %}"
+            class="w-1/2 mt-3  ml-auto inline-block px-5 py-2 mr-3 font-bold text-center text-align-center text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-gradient-to-r from-purple-600 to-red-500 leading-pro text-size-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 hover:scale-102 active:opacity-85 hover:shadow-soft-xs" href="{% url 'files:file-list' %}"
           >
             Dosyalara Dön
           </a>

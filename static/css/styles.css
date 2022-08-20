@@ -36,6 +36,12 @@
   /* 2 */
   border-color: #e9ecef;
   /* 2 */
+
+
+}
+
+.zoom {
+  zoom: 95%;
 }
 
 ::before,

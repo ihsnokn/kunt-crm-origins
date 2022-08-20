@@ -1,19 +1,40 @@
 {% extends "base.html" %} 
 {% block content %}
+<div class="ml-5">
+  <div
+      class="w-full mb-6 py-6 flex justify-between items-center border-b border-gray-200"
+    >
+      <div>
+        <h1 class="text-2xl text-gray-700 uppercase">Dosya oluştur</h1>
+      </div>
+      <div>
+        <a
+          class="inline-block px-3 py-2 mr-3 font-bold text-center uppercase align-middle transition-all bg-transparent border rounded-lg cursor-pointer border-fuchsia-500 leading-pro text-size-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 hover:scale-102 active:opacity-85 hover:shadow-soft-xs text-fuchsia-500 "
+          href="{% url 'files:file-list' %}"
+        >
+        <!-- style="width: 28px;height: 28px;" -->
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 512.043 512.043" style="enable-background:new 0 0 512.043 512.043;width: 17px;height: 17px; fill:#BA15A6;" xml:space="preserve">
+<g>
+	<g>
+		<path d="M286.17,256.021L505.752,36.44C519.191,23,509.673,0.021,490.667,0.021H256c-5.658,0-11.084,2.248-15.085,6.248
+			L6.248,240.936c-8.331,8.331-8.331,21.839,0,30.17l234.667,234.667c4.001,4.001,9.427,6.248,15.085,6.248h234.667
+			c19.006,0,28.524-22.979,15.085-36.418L286.17,256.021z M264.837,469.355L51.503,256.021L264.837,42.688h174.327L240.915,240.936
+			c-8.331,8.331-8.331,21.839,0,30.17l198.248,198.248H264.837z"/>
+	</g>
+</g>
+</svg>
+     
 
-<button
-  type="button"
-  class="inline-block px-6 py-3 mr-3 font-bold text-center uppercase align-middle transition-all bg-transparent border rounded-lg cursor-pointer border-fuchsia-500 leading-pro text-size-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 hover:scale-102 active:opacity-85 hover:shadow-soft-xs text-fuchsia-500"
->
-  <a href="{% url 'files:file-list' %}"> Dosyalara geri dön</a>
-</button>
-<br />
-<h1
-  class="py-2.2-em px-3.6-em text-size-xs-em rounded-1.8 inline-block whitespace-nowrap text-center bg-slate-650 text-slate-750 align-baseline font-bold uppercase leading-none"
->
-  Yeni dosya oluştur.
-</h1>
-<div class="container bg-slate-200">
+
+
+        Dosyalara dön</a
+        >
+      </div>
+    </div>
+
+</div>
+<div class="container bg-slate-200 ml-0">
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <div>
@@ -25,7 +46,7 @@
       max="9999999999"
       placeholder="Dosya No"
       class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
-      required=""
+   
       id="id_dosya_no"
     />
     <label for="id_basvuran">Basvuran:</label>
@@ -36,25 +57,17 @@
       id="id_basvuran"
       placeholder="Başvuran"
       maxlength="30"
+      required=""
       class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
     />
 
-    {% comment %} <label for="id_basvurulan">Basvurulan:</label>
 
-    <input
-      type="text"
-      name="basvurulan"
-      id="id_basvurulan"
-      placeholder="Başvurulan"
-      maxlength="30"
-      class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
-    /> {% endcomment %}
 
 
  <label for="id_basvurulan">Davalı:</label>   
     <select class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" name="davali" id="id_davali">
 
-  <option value="" selected>--------</option>
+  <option value=""    required="" selected>--------</option>
     {% for davalı in davalılar %}
            
       <option value="{{davalı.0}}">{{davalı.1}}</option>
@@ -62,19 +75,6 @@
     {% endfor %}
 
     </select>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     <label for="id_plaka">Plaka:</label>
@@ -86,12 +86,14 @@
       maxlength="10"
       placeholder="Plaka"
       maxlength="30"
+      required=""
       class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
     />
 
     <div class="py-2">
       <label for="id_basvuru_konusu">Basvuru konusu:</label>
       <select
+      required=""
         class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
         name="basvuru_konusu"
         id="id_basvuru_konusu"
@@ -106,67 +108,69 @@
 
 
 
-    <div class=" flex py-2">
+    <label for="id_dosya_durumu"> Dosya durumu:</label>
+
+    <select
+    required=""
+      class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+      name="dosya_durumu"
+      id="id_dosya_durumu"
+    >
+      <option value="" selected>--------</option>
+      {% for dosya_durumu in dosya_durumları %}
+
+      <option value="{{dosya_durumu.0}}">{{dosya_durumu.1}}</option>
+      {% endfor %}
+    </select>
+ 
+
+    <div class="py-2">
+      <div class="inline-block w-48 mr-4">
       <label for="id_kaza_tarihi">Kaza Tarihi:</label>
-      <br>
+    
+      
       <input
+      required=""
         type="date"
         name="kaza_tarihi"
         id="id_kaza_tarihi"
         placeholder="Kaza Tarihi"
-        class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft  inline-block  w-1/4    appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+        class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-48 appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
       />
 
-      <label for="id_dosya_durumu"> Dosya durumu:</label>
-
-      <select
-        class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft inline-block w-1/4 appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
-        name="dosya_durumu"
-        id="id_dosya_durumu"
-      >
-        <option value="" selected>--------</option>
-        {% for dosya_durumu in dosya_durumları %}
-
-        <option value="{{dosya_durumu.0}}">{{dosya_durumu.1}}</option>
-        {% endfor %}
-      </select>
-    </div>
-      <div class="flex py-2">
+      </div>
+  
+    <div class="inline-block">
         <label for="id_dava_tarihi">Dava tarihi:</label>
-
       <input
         type="date"
         name="dava_tarihi"
         id="id_dava_tarihi"
         placeholder="Dava Tarihi"
-        class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft inline-block w-1/4 appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+        class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-48 appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
       />
-      
-
-      <label for="id_lawyer"> İşlem Yapan:</label>
-
-      <select
-        name="lawyer"
-        required=""
-        id="id_lawyer"
-        class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft inline-block w-1/4 appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
-      >
-        <option value="" selected="">---------</option>
-        {% for lawyer in lawyers %}
-        <option value="{{lawyer.id}}">{{lawyer.user}}</option>
-        {% endfor %}
-      </select>
     </div>
+      <select
+      name="lawyer"
+      id="id_lawyer"  
+      hidden  
+    >
+      <option value="" selected=""></option>
+    </select> 
+
+
+
+    
   </div>
 
-  <div>
+  <div >
     <label for="id_image">Dosya:</label>
-    <input type="file" name="image" multiple="" id="id_image" />
+    <input  class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-100 appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" type="file" name="image" multiple="" id="id_image" />
   </div>
   <br />
   <button
     type="submit"
-    class="inline-block px-6 py-3 mr-3 font-bold text-center text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-gradient-fuchsia leading-pro text-size-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 hover:scale-102 active:opacity-85 hover:shadow-soft-xs"
+    class="inline-block px-5 py-2 mr-3 font-bold text-center text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-gradient-to-r from-red-500 to-purple-600  leading-pro text-size-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 hover:scale-102 active:opacity-85 hover:shadow-soft-xs"
   >
     Yükle
   </button>

@@ -1,26 +1,30 @@
 {% extends "base.html" %} {% block content %}
 
-<section class="flex flex-wrap -mx-3">
+<section class="flex flex-wrap -mx-3 ">
   <div class="flex-none w-full max-w-full px-3">
     <div
       class="w-full mb-6 py-6 flex justify-between items-center border-b border-gray-200"
     >
       <div>
-        <h1 class="text-4xl text-gray-800">Dosyalar</h1>
+        <h1 class="text-2xl text-gray-700 uppercase">Dosyalar</h1>
       </div>
       <div>
         <a
-          class="text-gray-550 hover:text-blue-500"
+          class="inline-block px-3 py-2 mr-3 font-bold text-center uppercase align-middle transition-all bg-transparent border rounded-lg cursor-pointer border-fuchsia-500 leading-pro text-size-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 hover:scale-102 active:opacity-85 hover:shadow-soft-xs text-fuchsia-500 "
           href="{% url 'files:File_create'%}"
         >
-          Yeni dosya yükle</a
+
+          <i class="fa fa-plus"></i>
+ 
+Yeni dosya yükle</a
         >
       </div>
+
     </div>
 
     <div class="tracking-wider leading-normal " >
       <!--Container-->
-      <div class="container">
+      <div class="">
         <!--Card-->
         <div id="recipients" class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
           <table

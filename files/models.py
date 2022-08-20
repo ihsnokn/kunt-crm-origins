@@ -32,29 +32,25 @@ class Lawyer(models.Model):
 class File(models.Model):
 
    
-    dosya_no = models.CharField(max_length=12)
+    dosya_no = models.CharField(max_length=12,default="",blank=True)
     basvuran = models.CharField(max_length=30)
 
     # basvurulan = models.CharField(max_length=30)
     davali = models.CharField(
     default='', choices=DAVALI_CHOICES, max_length=100)
-
     plaka = models.CharField(max_length=10)
-
     dava_tarihi = models.DateField(max_length=30, null=True, blank=True)
     dosya_durumu = models.CharField(
     default='', choices=SOURCE_CHOICES, max_length=100)
     basvuru_konusu = models.CharField(
     default='', choices=BASVURU_CHOICES, max_length=100)
-    kaza_tarihi=models.DateField(max_length=30, null=True, blank=True)
-
-
-
+    kaza_tarihi=models.DateField(max_length=30)
+    dosya_notu=models.TextField(max_length=1000,null=True,blank=True)
     # avukat silinince dosya da silinecek
     lawyer = models.ForeignKey(Lawyer,null=True, blank=True,on_delete=models.SET_NULL)
 
     def __str__(self):
-        return f"{self.basvuran} {self.basvurulan}"
+        return f"{self.basvuran} {self.davali}"
 
     @property
     def get_image(self):

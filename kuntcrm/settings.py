@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'files',
     'lawyers',
     'compressor',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [

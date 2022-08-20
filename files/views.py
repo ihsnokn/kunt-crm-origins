@@ -49,6 +49,7 @@ def FileListView(request):
 # FILE DETAIL VIEW
 
 def FileDetail(request,id):
+
     dosya_durumları=SOURCE_CHOICES
     basvuru_konuları=BASVURU_CHOICES
     davalılar=DAVALI_CHOICES
@@ -67,18 +68,19 @@ def FileDetail(request,id):
 
 
 def FileCreateView(request):
+    lawyer=Lawyer.objects.filter(user=request.user).first()
+
     form=FileModelForm(request.POST or None)
     formimage=ImageForm(request.POST or None)
     dosya_durumları=SOURCE_CHOICES
     basvuru_konuları=BASVURU_CHOICES
-    davalılar=DAVALI_CHOICES
-    
+    davalılar=DAVALI_CHOICES  
     lawyers=Lawyer.objects.all()   
     if request.method == 'POST':
         files = request.FILES.getlist("image")
         name= form.data.get('dosya_no')
         if not (form.errors):
-                classification_helper(name,files,form)
+                classification_helper(name,files,form,lawyer)
                 messages.success(request,"Dosya başarılı bir şekilde oluşturuldu.")
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
         messages.warning(request,"Bir sorun oluştu!")
@@ -92,7 +94,7 @@ def sign_out(request):
 # FILE UPDATE VIEW
 
 def FileUpdateView(request,pk):
-
+    lawyer=Lawyer.objects.filter(user=request.user).first()
     file = get_object_or_404(File,id = pk)
     form = FileModelForm()
     images = file.image_set.all()
@@ -107,7 +109,7 @@ def FileUpdateView(request,pk):
         form = FileModelForm(request.POST or None,instance = file)
         print(form.errors)
         if not (form.errors):
-            classification_helper(name,files,form)
+            classification_helper(name,files,form,lawyer)
             messages.success(request,"Dosya başarılı bir şekilde güncellendi.")
             # return redirect("/files/`{pk}`")
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
@@ -137,10 +139,11 @@ def file_delete(request, pk):
 
 
 def FileDeleteUpdate(request):
+    lawyer=Lawyer.objects.filter(user=request.user).first()
     file_array = json.loads(request.body)
-    print(file_array)
-    for i in file_array["file_array"]:
-       # print(i)
+    for i in file_array["file_array"]:   
         image= Image.objects.filter(id = i)
+        file= File.objects.filter(id=image[0].file_name.id)
+        file.update(lawyer=lawyer)
         image.delete()
     return JsonResponse('Payment submitted..', safe=False)
