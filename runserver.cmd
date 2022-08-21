@@ -4,6 +4,4 @@ python manage.py makemigrations
 
 python manage.py migrate
 
-python manage.py runserver
-
-@REM gunicorn --worker-tmp-dir /dev/shm kuntcrm.wsgiru
+gunicorn --worker-tmp-dir /dev/shm kuntcrm.wsgiru
