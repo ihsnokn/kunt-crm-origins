@@ -45,7 +45,7 @@ class File(models.Model):
     basvuru_konusu = models.CharField(
     default='', choices=BASVURU_CHOICES, max_length=100)
     kaza_tarihi=models.DateField(max_length=30)
-    dosya_notu=models.TextField(max_length=1000,null=True,blank=True)
+    dosya_notu=models.TextField(max_length=1000,blank=True)
     # avukat silinince dosya da silinecek
     lawyer = models.ForeignKey(Lawyer,null=True, blank=True,on_delete=models.SET_NULL)
 
