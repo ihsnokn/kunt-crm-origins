@@ -30,12 +30,13 @@ class SignUpView(generic.CreateView):
 
 class LandingPageView(generic.TemplateView):
     template_name = "landing.html"
-
+    
+@login_required(login_url = "login")
 def landing_page(request):
     return render(request, "landing.html")
 
 
-
+@login_required(login_url = "login")
 def FileListView(request):
     files = File.objects.all().order_by("id")
     context = {
@@ -47,7 +48,7 @@ def FileListView(request):
 
 
 # FILE DETAIL VIEW
-
+@login_required(login_url = "login")
 def FileDetail(request,id):
 
     dosya_durumları=SOURCE_CHOICES
@@ -66,7 +67,7 @@ def FileDetail(request,id):
 
 
 
-
+@login_required(login_url = "login")
 def FileCreateView(request):
     lawyer=Lawyer.objects.filter(user=request.user).first()
 
@@ -92,7 +93,7 @@ def sign_out(request):
 	return redirect("login") 
 
 # FILE UPDATE VIEW
-
+@login_required(login_url = "login")
 def FileUpdateView(request,pk):
     lawyer=Lawyer.objects.filter(user=request.user).first()
     file = get_object_or_404(File,id = pk)
