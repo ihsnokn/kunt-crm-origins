@@ -97,6 +97,7 @@ def sign_out(request):
 # FILE UPDATE VIEW
 @login_required(login_url = "login")
 def FileUpdateView(request,pk):
+    update=True
     lawyer=Lawyer.objects.filter(user=request.user).first()
     file = get_object_or_404(File,id = pk)
     form = FileModelForm()
@@ -112,13 +113,13 @@ def FileUpdateView(request,pk):
         form = FileModelForm(request.POST or None,instance = file)
         print(form.errors)
         if not (form.errors):
-            classification_helper(name,files,form,lawyer)
+            result=classification_helper(files,form,lawyer,update)
+            if result == False:
+                    messages.warning(request,"Belgenin ismi 180 karakterden fazla olamaz!")
+                    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
             messages.success(request,"Dosya başarılı bir şekilde güncellendi.")
-            # return redirect("/files/`{pk}`")
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-            # file = form.save(commit=False)
-            # file.save()
-            # file_name = File.objects.filter(dosya_no=file.dosya_no).first()
+
         messages.warning(request,"Bir sorun oluştu!")
         return redirect("/files",{'file':file,'dosya_durumları':dosya_durumları,"lawyers":lawyers,"images": images,})
    
