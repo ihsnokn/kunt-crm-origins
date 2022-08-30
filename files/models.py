@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 from django import forms
 from .choises import SOURCE_CHOICES,BASVURU_CHOICES,DAVALI_CHOICES
 import os
-
+from . import filefieldhelp
 
 
 class User(AbstractUser):  # auth.models in prebuild user modeli
@@ -71,7 +71,7 @@ post_save.connect(post_user_created_signal, sender=User)
 
 class Image(models.Model):
     file_name = models.ForeignKey(File, on_delete=models.CASCADE)
-    image = models.FileField(upload_to='class',max_length=500)
+    image = filefieldhelp.FileField(upload_to='class',max_length=500)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
