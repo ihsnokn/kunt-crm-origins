@@ -69,6 +69,7 @@ def FileDetail(request,id):
 
 @login_required(login_url = "login")
 def FileCreateView(request):
+    update=False
     lawyer=Lawyer.objects.filter(user=request.user).first()
     form=FileModelForm(request.POST or None)
     formimage=ImageForm(request.POST or None)
@@ -80,7 +81,7 @@ def FileCreateView(request):
         files = request.FILES.getlist("image")
         name= form.data.get('dosya_no')
         if not (form.errors):
-                result= classification_helper(files,form,lawyer)
+                result= classification_helper(files,form,lawyer,update)
                 if result == False:
                     messages.warning(request,"Belgenin ismi 180 karakterden fazla olamaz!")
                     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
