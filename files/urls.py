@@ -1,7 +1,7 @@
 
 
 from django.urls import path
-from .views import file_delete,FileDeleteView
+
 
 from . import views
 app_name = "files"
@@ -11,10 +11,12 @@ urlpatterns = [
   #  path('', FileListView.as_view(), name='file-list'),
     path('', views.FileListView, name='file-list'),
    # path('<int:pk>/', FileDetailView.as_view(), name='file-detail'),
-    path('<int:id>/', views.FileDetail, name='filedetail'),
+    path('<int:pk>/', views.FileDetail, name='filedetail'),
     # path('<int:pk>/update', FileUpdateView.as_view(), name='file-update'),
     path('<int:pk>/update', views.FileUpdateView, name='file-update'),
-    path('<int:pk>/delete', FileDeleteView.as_view(), name='file-delete'),
+    path('<int:pk>/update/fee', views.FileUpdateFeeView, name='file-update-fee'),
+   # path('<int:pk>/delete', FileDeleteView.as_view(), name='file-delete'),
+    path('<int:pk>/delete/', views.file_delete, name='file-delete'),
 
     
     

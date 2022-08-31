@@ -21,7 +21,6 @@ BASVURU_CHOICES = (
         ('hasar_ve_deger_kaybi', 'Hasar ve Değer Kaybı'),
         ('maluliyet', 'Maluliyet'),
         ('destekten_yoksun_kalma', 'Destekten Yoksun Kalma'),
-        ('odeme_bekleyen', 'Ödeme Bekleyen'),
         ('diger', 'Diğer'),
 
     )

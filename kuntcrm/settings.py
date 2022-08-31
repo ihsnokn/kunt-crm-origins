@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     'files',
     'lawyers',
     'compressor',
+    'django_extensions',
+    'django_quill',
 ]
 
 MIDDLEWARE = [
@@ -199,6 +201,58 @@ if not DEBUG:
 # ####WINDOWS####
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # import os
 # import environ
 # from pathlib import Path
@@ -231,7 +285,10 @@ if not DEBUG:
 #     'files',
 #     'lawyers',
 #     'compressor',
+#     'django_extensions',
+#     'django_quill',
 
+  
 # ]
 
 # MIDDLEWARE = [
@@ -263,6 +320,16 @@ if not DEBUG:
 #         },
 #     },
 # ]
+
+
+
+
+
+
+
+
+
+
 
 # WSGI_APPLICATION = 'kuntcrm.wsgi.application'
 
@@ -332,10 +399,11 @@ if not DEBUG:
 # STATIC_URL = '/static/'
 
 # STATICFILES_DIRS = [
-#     BASE_DIR / "static_root"
+#      os.path.join(BASE_DIR, 'static_root')
 # ]
 
-# STATIC_ROOT = "static"
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 # STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -368,6 +436,28 @@ if not DEBUG:
 
 # STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
 
+
+
+# QUILL_CONFIGS = {
+#     'default':{
+#         'theme': 'white',
+#         'modules': {
+#             'syntax': True,
+#             'toolbar': [
+#                 [
+#                     {'font': []},
+#                     {'header': []},
+#                     {'align': []},
+#                     'bold', 'italic', 'underline', 'strike', 'blockquote',
+#                     {'color': []},
+#                     {'background': []},
+#                 ],
+#                 ['code-block', 'link'],
+#                 ['clean'],
+#             ]
+#         }
+#     }
+#  }
 
 
 # if not DEBUG:

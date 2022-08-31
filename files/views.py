@@ -5,8 +5,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseRedirect, request
 from files.helper import classification_helper
-from .models import File, Image, Lawyer
-from .forms import FileForm, FileModelForm, CustomUserCreationForm, ImageForm
+from .models import File, File_Notes, Image, Lawyer, Masraflar
+from .forms import FileForm, FileModelForm, CustomUserCreationForm, FileNoteForm, ImageForm,FeeModelForm
 from django.views import generic
 from django.views.generic.edit import FormView
 from django.contrib.auth import logout
@@ -16,6 +16,7 @@ from django.contrib.auth.decorators import user_passes_test,login_required
 from django.http import JsonResponse
 from django.contrib import messages
 from .choises import SOURCE_CHOICES,BASVURU_CHOICES,DAVALI_CHOICES
+from django.conf import settings
 # CRUD create retrieve update delete + list
 
 
@@ -30,12 +31,13 @@ class SignUpView(generic.CreateView):
 
 class LandingPageView(generic.TemplateView):
     template_name = "landing.html"
-
+    
+@login_required(login_url = "login")
 def landing_page(request):
     return render(request, "landing.html")
 
 
-
+@login_required(login_url = "login")
 def FileListView(request):
     files = File.objects.all().order_by("id")
     context = {
@@ -47,13 +49,13 @@ def FileListView(request):
 
 
 # FILE DETAIL VIEW
-
-def FileDetail(request,id):
+@login_required(login_url = "login")
+def FileDetail(request,pk):
 
     dosya_durumları=SOURCE_CHOICES
     basvuru_konuları=BASVURU_CHOICES
     davalılar=DAVALI_CHOICES
-    file = get_object_or_404(File,id = id)
+    file = get_object_or_404(File,id = pk)
     images = file.image_set.all()
     context = {
         "file": file,
@@ -66,10 +68,10 @@ def FileDetail(request,id):
 
 
 
-
+@login_required(login_url = "login")
 def FileCreateView(request):
+    update=False
     lawyer=Lawyer.objects.filter(user=request.user).first()
-
     form=FileModelForm(request.POST or None)
     formimage=ImageForm(request.POST or None)
     dosya_durumları=SOURCE_CHOICES
@@ -80,7 +82,10 @@ def FileCreateView(request):
         files = request.FILES.getlist("image")
         name= form.data.get('dosya_no')
         if not (form.errors):
-                classification_helper(name,files,form,lawyer)
+                result= classification_helper(files,form,lawyer,update)
+                if result == False:
+                    messages.warning(request,"Belgenin ismi 180 karakterden fazla olamaz!")
+                    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
                 messages.success(request,"Dosya başarılı bir şekilde oluşturuldu.")
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
         messages.warning(request,"Bir sorun oluştu!")
@@ -92,11 +97,15 @@ def sign_out(request):
 	return redirect("login") 
 
 # FILE UPDATE VIEW
-
+@login_required(login_url = "login")
 def FileUpdateView(request,pk):
+    update=True
     lawyer=Lawyer.objects.filter(user=request.user).first()
-    file = get_object_or_404(File,id = pk)
+    file = get_object_or_404(File,id = pk)  
+    file_obj = File.objects.filter(id = pk).first()
+    note = File_Notes.objects.filter(file=file_obj).first()
     form = FileModelForm()
+    form_note = FileNoteForm()
     images = file.image_set.all()
     formimage=ImageForm(request.POST or None)
     dosya_durumları=SOURCE_CHOICES
@@ -107,42 +116,96 @@ def FileUpdateView(request,pk):
         files = request.FILES.getlist("image")
         name= form.data.get('dosya_no')
         form = FileModelForm(request.POST or None,instance = file)
-        print(form.errors)
-        if not (form.errors):
-            classification_helper(name,files,form,lawyer)
+        form_note = FileNoteForm(request.POST or None,instance = note)
+        print(form_note.errors)
+        if not (form.errors and form_note.errors):
+            result=classification_helper(files,form,lawyer,update)
+            if result == False:
+                    messages.warning(request,"Belgenin ismi 180 karakterden fazla olamaz!")
+                    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+            form_note.save()
+
             messages.success(request,"Dosya başarılı bir şekilde güncellendi.")
-            # return redirect("/files/`{pk}`")
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-            # file = form.save(commit=False)
-            # file.save()
-            # file_name = File.objects.filter(dosya_no=file.dosya_no).first()
+
         messages.warning(request,"Bir sorun oluştu!")
-        return redirect("/files",{'file':file,'dosya_durumları':dosya_durumları,"lawyers":lawyers,"images": images,})
+        return redirect("/files",{'note':note,'form_note':form_note,'file':file,'dosya_durumları':dosya_durumları,"lawyers":lawyers,"images": images,})
    
-    return render(request,"files/file_update.html",{'file':file,'dosya_durumları':dosya_durumları,'davalılar':davalılar,"basvuru_konuları":basvuru_konuları,"lawyers":lawyers,"images": images} )
+    return render(request,"files/file_update.html",{'form_note':form_note,'file':file,'note':note,'form':form,'dosya_durumları':dosya_durumları,'davalılar':davalılar,"basvuru_konuları":basvuru_konuları,"lawyers":lawyers,"images": images} )
+
+
+
+
+
+@login_required(login_url = "login")
+def FileUpdateFeeView(request,pk):
+
+    lawyer=Lawyer.objects.filter(user=request.user).first()
+    file = get_object_or_404(File,id = pk)
+    file_fee = get_object_or_404(Masraflar,file_name = pk)
+    form = FeeModelForm()
+
+    lawyers=Lawyer.objects.all() 
+    images = file.image_set.all()  
+    if request.method == "POST":
+        form = FeeModelForm(request.POST or None,instance = file_fee)
+        if not (form.errors):
+            fee = form.save(commit=False)
+            fee.save()
+            file.lawyer=lawyer 
+            file.save()         
+            messages.success(request,"Masraflar başarılı bir şekilde güncellendi.")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+        messages.warning(request,"Bir sorun oluştu!")
+        return redirect("/files",{'file':file,"lawyers":lawyers,"images": images,'file_fee':file_fee,})
+   
+    return render(request,"files/file_fees.html",{'file_fee':file_fee,'file':file,'form':form,"lawyers":lawyers,"images": images,} )
 
 
 
  
 # FILE DELETE VIEW
-class FileDeleteView(LoginRequiredMixin, generic.DeleteView):
-    template_name = "files/file_delete.html"
-    queryset = File.objects.all()
+# class FileDeleteView(LoginRequiredMixin, generic.DeleteView):
+#     template_name = "files/file_delete.html"
+#     queryset = File.objects.all()
 
-    def get_success_url(self):
-        return reverse("files:file-list")
+#     def get_success_url(self):
+#         parent_dir2 = settings.MEDIA_ROOT+"\\class\\" + str(pk)
+#         for i in os.listdir(parent_dir2):
+#                 os.remove( settings.MEDIA_ROOT + "/class/"+ str(pk)+ "/" +i)
+#         return reverse("files:file-list")
+
 
 def file_delete(request, pk):
     file = File.objects.get(id=pk)
-    file.delete()
-    return redirect("/files")
+    if request.method == "POST":
+        
+        file.delete()
+        path = settings.MEDIA_ROOT+"\\class\\" + str(pk)
+        for i in os.listdir(path):
+                os.remove( settings.MEDIA_ROOT + "/class/"+ str(pk)+ "/" +i)
+        return redirect("/files")
+    return render(request,"files/file_delete.html",{'file':file} )
+
+
+
+
+
+
+
 
 
 def FileDeleteUpdate(request):
     lawyer=Lawyer.objects.filter(user=request.user).first()
     file_array = json.loads(request.body)
+    print(file_array)
     for i in file_array["file_array"]:   
         image= Image.objects.filter(id = i)
+        img= Image.objects.filter(id = i).first()
+        print(img.image)
+        # # path = settings.MEDIA_ROOT+ img.image
+        os.remove( settings.MEDIA_ROOT + "\\" + str(img.image))
         file= File.objects.filter(id=image[0].file_name.id)
         file.update(lawyer=lawyer)
         image.delete()
