@@ -205,7 +205,7 @@ def FileDeleteUpdate(request):
         img= Image.objects.filter(id = i).first()
         print(img.image)
         # # path = settings.MEDIA_ROOT+ img.image
-        os.remove( settings.MEDIA_ROOT + "\\" + str(img.image))
+        os.remove( settings.MEDIA_ROOT + "//" + str(img.image))
         file= File.objects.filter(id=image[0].file_name.id)
         file.update(lawyer=lawyer)
         image.delete()
