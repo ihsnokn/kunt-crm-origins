@@ -109,6 +109,9 @@ class Masraflar(models.Model):
     davalidan_gelen_fee = models.DecimalField(max_digits=8, decimal_places=2,null=True, blank=True)
     davalidan_gelen_date=models.DateField(max_length=30,null=True, blank=True)
 
+    bk_gelen_fee = models.DecimalField(max_digits=8, decimal_places=2,null=True, blank=True)
+    bk_gelen_date=models.DateField(max_length=30,null=True, blank=True)
+    
     icradan_gelen_fee = models.DecimalField(max_digits=8, decimal_places=2,null=True, blank=True)
     icradan_gelen_date=models.DateField(max_length=30,null=True, blank=True)
 
