@@ -1,6 +1,6 @@
 from django import forms
 from matplotlib import widgets
-from .models import File, Image
+from .models import File, File_Notes, Image, Masraflar
 from django.forms import ClearableFileInput
 from django.contrib.auth.forms import UserCreationForm, UsernameField
 from django.contrib.auth import get_user_model
@@ -29,7 +29,8 @@ class FileModelForm(forms.ModelForm):
             'dosya_durumu',
             'dosya_durumu',
             'lawyer',
-            'kaza_tarihi'
+            'kaza_tarihi',
+          
         )
 
         error_messages = {
@@ -37,6 +38,16 @@ class FileModelForm(forms.ModelForm):
 
         }
 
+
+class FileNoteForm(forms.ModelForm):
+
+    class Meta:
+        model = File_Notes
+        fields = (
+            'note',         
+        )
+        error_messages = {
+        }
 
 class FileForm(forms.Form):
     SOURCE_CHOICES = (
@@ -91,6 +102,17 @@ class ImageForm(forms.ModelForm):
         error_messages = {
             'image': {
                 'null': _("Please input image."),
+                
             },
+
+        }
+
+class FeeModelForm(forms.ModelForm):
+    class Meta:
+        model = Masraflar
+        fields = '__all__'
+        exclude = ('file_name',)
+        error_messages = {
+
 
         }
