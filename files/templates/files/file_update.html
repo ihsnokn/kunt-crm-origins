@@ -1,10 +1,13 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} 
+{% block content %}
 
 <section class="text-gray-600 body-font overflow-hidden">
-  <div class="container px-5 py-24 pt-8 mx-auto border-2 ">
-    <div class="lg:w-4/5 mx-auto mt-0 flex flex-wrap  ">
+  <div class="container px-5 py-24 pt-8 mx-auto border-2">
+    <div class="lg:w-4/5 mx-auto mt-0 flex flex-wrap">
       <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
-        <h2 class="text-sm title-font text-gray-500 tracking-widest">Dosya No</h2>
+        <h2 class="text-sm title-font text-gray-500 tracking-widest">
+          Dosya No
+        </h2>
         <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">
           {{file.dosya_no}}
         </h1>
@@ -15,360 +18,390 @@
           >
             Dosya Detayı
           </a>
-          
+
           <a
             href="{% url 'files:file-update' file.pk %}"
             class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1"
           >
             Güncelle
           </a>
+          <a
+            href="{% url 'files:file-update-fee' file.pk %}"
+            class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1"
+          >
+            Masraflar
+          </a>
         </div>
 
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  <div>
-    <label for="id_dosya_no">Dosya no:</label>   
-      <input type="text" name="dosya_no" value="{{file.dosya_no}}" min="0" max="9999999999" placeholder="Dosya No" class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"  id="id_dosya_no">
-    <label for="id_basvuran">Basvuran:</label>
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{form_note.media}}
+          <div>
+            <label for="id_dosya_no">Dosya no:</label>
+            <input
+              type="text"
+              name="dosya_no"
+              value="{{file.dosya_no}}"
+              min="0"
+              max="9999999999"
+              placeholder="Dosya No"
+              class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+              id="id_dosya_no"
+            />
+            <label for="id_basvuran">Basvuran:</label>
+
+            <input
+              type="text"
+              required=""
+              value="{{file.basvuran}}"
+              name="basvuran"
+              id="id_basvuran"
+              placeholder="Başvuran"
+              maxlength="30"
+              class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+            />
+
+            {% comment %}
+            <input
+              type="text"
+              value="{{file.basvurulan}}"
+              name="basvurulan"
+              id="id_basvurulan"
+              placeholder="Başvurulan"
+              maxlength="30"
+              class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+            />
+            {% endcomment %}
+
+            <label for="id_basvurulan">Davalı:</label>
+            <select
+              required=""
+              class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+              name="davali"
+              id="id_davali"
+            >
+              {% for davalı in davalılar %} {% if davalı.0 == file.davali %}
+              <option value="{{davalı.0}}" selected>{{davalı.1}}</option>
+              {% else %}
+              <option value="{{davalı.0}}">{{davalı.1}}</option>
+              {% endif %} {% endfor %}
+            </select>
+
+            <label for="id_plaka">Plaka:</label>
+
+            <input
+              required=""
+              type="text"
+              value="{{file.plaka}}"
+              name="plaka"
+              id="id_plaka"
+              maxlength="10"
+              placeholder="Plaka"
+              maxlength="30"
+              class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+            />
+
+            <div class="py-2">
+              <label for="id_basvuru_konusu">Basvuru konusu:</label>
+              <select
+                required=""
+                class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+                name="basvuru_konusu"
+                id="id_basvuru_konusu"
+              >
+                {% for basvuru_konusu in basvuru_konuları %}
+                 {% if basvuru_konusu.0 == file.basvuru_konusu %}
+                <option value="{{basvuru_konusu.0}}" selected>
+                  {{basvuru_konusu.1}}
+                </option>
+                {% else %}
+                <option value="{{basvuru_konusu.0}}">
+                  {{basvuru_konusu.1}}
+                </option>
+                {% endif %} 
+                {% endfor %}
+              </select>
+            </div>
+
+            <label for="id_dosya_durumu"> Dosya durumu:</label>
+
+            <select
+              required=""
+              class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+              name="dosya_durumu"
+              id="id_dosya_durumu"
+            >
+              {% for dosya_durumu in dosya_durumları %} 
+              {% if dosya_durumu.0 == file.dosya_durumu %}
+              <option value="{{dosya_durumu.0}}" selected>
+                {{dosya_durumu.1}}
+              </option>
+              {% else %}
+              <option value="{{dosya_durumu.0}}">{{dosya_durumu.1}}</option>
+              {% endif %} 
+              {% endfor %}
+            </select>
+
+            <div class="">
+              <label for="id_kaza_tarihi">Kaza tarihi:</label>
+
+              <input required="" type="date"
+              value="{{file.kaza_tarihi|date:"Y-m-d" }}" name="kaza_tarihi"
+              id="id_kaza_tarihi" placeholder="Kaza Tarihi"
+              class="focus:shadow-soft-primary-outline text-size-sm leading-5.6
+              ease-soft block w-full appearance-none rounded-lg border
+              border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2
+              font-normal text-gray-700 outline-none transition-all
+              placeholder:text-gray-500 focus:border-fuchsia-300
+              focus:outline-none">
+            </div>
+            <div class="">
+              <label for="id_dava_tarihi">Dava tarihi:</label>
+
+              <input type="date" value="{{file.dava_tarihi|date:"Y-m-d" }}"
+              name="dava_tarihi" id="id_dava_tarihi" placeholder="Dava Tarihi"
+              class="focus:shadow-soft-primary-outline text-size-sm leading-5.6
+              ease-soft block w-full appearance-none rounded-lg border
+              border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2
+              font-normal text-gray-700 outline-none transition-all
+              placeholder:text-gray-500 focus:border-fuchsia-300
+              focus:outline-none">
+
+              <select name="lawyer" id="id_lawyer" hidden>
+                <option value="" selected=""></option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label for="id_image">Dosya:</label>
+            <input
+              class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 mb-3 ease-soft block w-100 appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+              type="file"
+              name="image"
+              multiple=""
+              id="id_image"
+            />
+          </div>
+
+
+          
+          <div class="vLargeTextField django-quill-widget-container">
+            
+            <div
+              id="quill-id_note"
+              class="django-quill-widget ql-container ql-snow"
+              data-config='{"theme": "snow", "modules": {"syntax": true, "toolbar": [[{"font": []}, {"header": []}, {"align": []}, "bold", "italic", "underline", "strike", "blockquote", {"color": []}, {"background": []}], ["code-block", "link"], ["clean"]]}}'
+              data-type="django-quill"
+            >
+              <div
+                class="ql-editor ql-blank"
+                data-gramm="false"
+                contenteditable="true"
+              >
+                <p>
+                  {{note.note.html|safe}}
+                  <br />
+                </p>
+              </div>
+              <div
+                class="ql-clipboard"
+                contenteditable="true"
+                tabindex="-1"
+              ></div>
+              <div class="ql-tooltip ql-hidden">
+                <a
+                  class="ql-preview"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href="about:blank"
+                ></a
+                ><input
+                  type="text"
+                  data-formula="e=mc^2"
+                  data-link="https://quilljs.com"
+                  data-video="Embed URL"
+                /><a class="ql-action"></a><a class="ql-remove"></a>
+              </div>
+            </div>
+            <input
+              id="quill-input-id_note"
+              name="note"
+              type="hidden"
+            />
+            <script>
+              (function () {
+                var wrapper = new QuillWrapper(
+                  "quill-id_note",
+                  "quill-input-id_note",
+                  JSON.parse(
+                    "{\u0022theme\u0022: \u0022snow\u0022, \u0022modules\u0022: {\u0022syntax\u0022: true, \u0022toolbar\u0022: [[{\u0022font\u0022: []}, {\u0022header\u0022: []}, {\u0022align\u0022: []}, \u0022bold\u0022, \u0022italic\u0022, \u0022underline\u0022, \u0022strike\u0022, \u0022blockquote\u0022, {\u0022color\u0022: []}, {\u0022background\u0022: []}], [\u0022code\u002Dblock\u0022, \u0022link\u0022], [\u0022clean\u0022]]}}"
+                  )
+                );
+              })();
+            </script>
+          </div>
+
+          <button
+            type="submit"
+            class="inline-block px-5 py-2 mr-3 mt-3 font-bold text-center text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-gradient-to-r from-red-500 to-purple-600 leading-pro text-size-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 hover:scale-102 active:opacity-85 hover:shadow-soft-xs"
+          >
+            Yükle
+          </button>
+
+        </form>
 
-      <input type="text" required="" value="{{file.basvuran}}" name="basvuran" id="id_basvuran" placeholder="Başvuran" maxlength="30" class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none">
-
-
-
-   
-      {% comment %} <input type="text" value="{{file.basvurulan}}" name="basvurulan" id="id_basvurulan" placeholder="Başvurulan" maxlength="30" class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"> {% endcomment %}
-
- <label for="id_basvurulan">Davalı:</label>   
-    <select required="" class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" name="davali" id="id_davali">
-
-
-    {% for davalı in davalılar %}
-        {% if  davalı.0 ==  file.davali %}
-        <option value="{{davalı.0}}" selected > {{davalı.1}}</option> 
-        {% else %}
-        <option value="{{davalı.0}}">{{davalı.1}}</option>
-        {% endif %}
-
-    {% endfor %}
-
-    </select>
-
-
-
-
-
-
-
-
-
-    <label for="id_plaka">Plaka:</label>
-
-      <input required="" type="text" value="{{file.plaka}}" name="plaka" id="id_plaka" maxlength="10" placeholder="Plaka" maxlength="30" class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none">
-
-
-<div class="py-2">
-   <label for="id_basvuru_konusu">Basvuru konusu:</label>
-    <select required="" class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" name="basvuru_konusu" id="id_basvuru_konusu">
-
-
-    {% for basvuru_konusu in basvuru_konuları %}
-        {% if  basvuru_konusu.0 ==  file.basvuru_konusu %}
-        <option value="{{basvuru_konusu.0}}" selected > {{basvuru_konusu.1}}</option> 
-        {% else %}
-      <option value="{{basvuru_konusu.0}}">{{basvuru_konusu.1}}</option>
-        {% endif %}
-
-    {% endfor %}
-
-    </select>
-
-</div>
-
-
-
-
-
-
-
-
-
-<label for="id_dosya_durumu"> Dosya durumu:</label>
-
-
-<select required="" class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" name="dosya_durumu" id="id_dosya_durumu">
-
-
-{% for dosya_durumu in dosya_durumları %}
-    {% if  dosya_durumu.0 ==  file.dosya_durumu %}
-    <option value="{{dosya_durumu.0}}" selected > {{dosya_durumu.1}}</option> 
-    {% else %}
-  <option value="{{dosya_durumu.0}}">{{dosya_durumu.1}}</option>
-    {% endif %}
-
-{% endfor %}
-
-</select>
-
-      
-<div class="">
-
-    <label for="id_kaza_tarihi">Kaza tarihi:</label>
-
-      <input required="" type="date" value="{{file.kaza_tarihi|date:"Y-m-d" }}" name="kaza_tarihi" id="id_kaza_tarihi"  placeholder="Kaza Tarihi"  class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none">
-
- 
-
-   
-  
-</div>
-  <div class="">
-    <label for="id_dava_tarihi">Dava tarihi:</label>
-
-    <input type="date" value="{{file.dava_tarihi|date:"Y-m-d" }}" name="dava_tarihi" id="id_dava_tarihi"  placeholder="Dava Tarihi"  class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none">
-    
-
- 
-        <select
-        name="lawyer"
-        id="id_lawyer"  
-        hidden  
-      >
-        <option value="" selected=""></option>
-      </select> 
-
-
-
-        
-  </div>
-  </div>
-  <div>
-    <label for="id_image">Dosya:</label>
-      <input class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-100 appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" type="file" name="image" multiple=""  id="id_image">
-</div>
-
-
-  <button type="submit" class="inline-block px-5 py-2 mr-3 mt-3 font-bold text-center text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-gradient-to-r from-red-500 to-purple-600  leading-pro text-size-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 hover:scale-102 active:opacity-85 hover:shadow-soft-xs">Yükle</button>
-
-
-</form>
-
-
-
-
-
-
-
-
-
-
-        
         <a
           href="{% url 'files:file-delete' file.pk %}"
-          class="w-1/3 mt-3  ml-auto inline-block px-5 py-2 mr-3 font-bold text-center text-align-center text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-gradient-to-r from-purple-600 to-red-500 leading-pro text-size-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 hover:scale-102 active:opacity-85 hover:shadow-soft-xs"
+          class="w-1/3 mt-3 ml-auto inline-block px-5 py-2 mr-3 font-bold text-center text-align-center text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-gradient-to-r from-purple-600 to-red-500 leading-pro text-size-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 hover:scale-102 active:opacity-85 hover:shadow-soft-xs"
         >
           Dosyayı Sil
         </a>
       </div>
-     <div class="container border-2 border-indigo-600 lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded">
-          {% if images %}
+      <div
+        class="container border-2 border-indigo-600 lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
+      >
+        {% if images %}
 
-          <br>
-          {% for image in  images %}
-          
-          <input type="checkbox" class="fileCheckbox" name="image" id="id_image" value="{{image.id}}">
-          <a
-            href="{{image.image.url}}"
-            class=" p-2 ml-auto text-gray-900"
-            target="_blank"
-            ><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-</svg>{{image.filename | truncatechars:40}}</a
-          >
-          <br>
-          
-          {% endfor %}
-          <br>
-          <button type="submit" id="file-delete-but" class="inline-block px-6 py-3 mr-3 font-bold text-center text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-gradient-fuchsia leading-pro text-size-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 hover:scale-102 active:opacity-85 hover:shadow-soft-xs" >Sil</button>
-         
-  
-          {% else %}
-          <span href="#" class=" p-auto ml-auto text-gray-900" 
-            >Dosya Yok</span
-          >
-          {% endif %}
-          
+        <br />
+        {% for image in images %}
 
-        
+        <input
+          type="checkbox"
+          class="fileCheckbox"
+          name="image"
+          id="id_image"
+          value="{{image.id}}"
+        />
+        <a
+          href="{{image.image.url}}"
+          class="p-2 ml-auto text-gray-900"
+          target="_blank"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
+            /></svg>{{image.filename | truncatechars:40}}</a
+        >
+        <br />
+
+        {% endfor %}
+        <br />
+        <button
+          type="submit"
+          id="file-delete-but"
+          class="inline-block px-6 py-3 mr-3 font-bold text-center text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-gradient-fuchsia leading-pro text-size-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 hover:scale-102 active:opacity-85 hover:shadow-soft-xs"
+        >
+          Sil
+        </button>
+
+        {% else %}
+        <span href="#" class="p-auto ml-auto text-gray-900">Dosya Yok</span>
+        {% endif %}
       </div>
-
-
-
-
-
-
     </div>
   </div>
 </section>
 
 
+
 {% block scripts %}
 
 <script>
-
-
   function getCookie(name) {
-              var cookieValue = null;
-              if (document.cookie && document.cookie !== '') {
-                  var cookies = document.cookie.split(';');
-                  for (var i = 0; i < cookies.length; i++) {
-                      var cookie = cookies[i].trim();
-            
-                      if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                          break;
-                      }
-                  }
-              }
-              return cookieValue;
-          }
-          var csrftoken = getCookie('csrftoken');
-  
-  
-    </script>
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      var cookies = document.cookie.split(";");
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
 
-
-
-
-
-  <script>
-    let images =document.getElementsByName("image")
-    console.log(images)
-
-    for (let i = 0; i < images.length; i++) {
-      console.log(images[i].value)
-}
-
-  </script>
-
-  <script>
-
-let delete_but =document.getElementById('file-delete-but');
-
-
-
-
-
-
-delete_but.addEventListener("click", function (){
-  console.log("CLİCK")
-let file_array = [];
-var checkedValue = null; 
-var inputElements = document.getElementsByClassName('fileCheckbox');
-for(var i=0; inputElements[i]; ++i){
-      if(inputElements[i].checked){
-           checkedValue = inputElements[i].value;
-           file_array.push(checkedValue);
-          
-          
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
       }
     }
-   //console.log(file_array)   
+    return cookieValue;
+  }
+  var csrftoken = getCookie("csrftoken");
+</script>
 
+<script>
+  let images = document.getElementsByName("image");
+  console.log(images);
 
+  for (let i = 0; i < images.length; i++) {
+    console.log(images[i].value);
+  }
+</script>
 
+<script>
+  let delete_but = document.getElementById("file-delete-but");
 
+  delete_but.addEventListener("click", function () {
+    console.log("CLİCK");
+    let file_array = [];
+    var checkedValue = null;
+    var inputElements = document.getElementsByClassName("fileCheckbox");
+    for (var i = 0; inputElements[i]; ++i) {
+      if (inputElements[i].checked) {
+        checkedValue = inputElements[i].value;
+        file_array.push(checkedValue);
+      }
+    }
+    //console.log(file_array)
 
+    //  location.reload();
 
-          //  location.reload();
-        
+    deleteFetch(file_array);
+  });
 
-      
-    deleteFetch(file_array)
+  function deleteFetch(file_array) {
+    //var url = 'https://kunt-crm-b78t7.ondigitalocean.app/files/file-delete-update/'
+    var url = "/files/file-delete-update/";
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        "X-CSRFToken": csrftoken,
+      },
+      body: JSON.stringify({ file_array: file_array }),
+    })
+      .then((res) => console.log(res))
+      .then((res) => reloadPage())
+      .catch((err) => console.log(err));
+  }
 
+  function reloadPage() {
+    location.reload();
+  }
 
+  // let message_div= document.getElementById("MasterContainer")
 
- });
+  // let  div1 = document.createElement("div");
+  // let  strong1 = document.createElement("strong");
+  // let  span1 = document.createElement("span");
+  // let  svg1 = document.createElement("svg");
+  // div1.className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mb-3 rounded relative"
+  // strong1.className="font-bold"
+  // strong1.innerHTML="Seçilen dosyalar başarılı bir şekilde silindi"
+  // svg1.className="fill-current h-6 w-6 text-red-500"
+  // span1.className="absolute top-0 bottom-0 right-0 px-4 py-3"
+  // span1.appendChild(svg1);
+  // div1.appendChild(strong1);
+  // div1.appendChild(span1);
+  // message_div.appendChild(div1);
+  // console.log(message_div)
 
-function deleteFetch(file_array){
-   //var url = 'https://kunt-crm-b78t7.ondigitalocean.app/files/file-delete-update/'
-  var url = '/files/file-delete-update/'
-  fetch(url, {
-                 method:'POST',
-                 headers:{
-                     'Content-type':'application/json',
-                     'X-CSRFToken':csrftoken,
-                 },
-                 body:JSON.stringify({'file_array':file_array})
-             })
-             .then(res => console.log(res))
-             .then(res => reloadPage())
-             .catch(err => console.log(err))
-             
- 
+  // span.onclick=function(){this.parentElement.style.display='none';}
+  // console.log(div)
+</script>
 
-
-}
-
-function reloadPage(){
-  location.reload();
-
-}
-
-// let message_div= document.getElementById("MasterContainer")
-
-// let  div1 = document.createElement("div");
-// let  strong1 = document.createElement("strong");
-// let  span1 = document.createElement("span");
-// let  svg1 = document.createElement("svg");
-// div1.className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mb-3 rounded relative"
-// strong1.className="font-bold"
-// strong1.innerHTML="Seçilen dosyalar başarılı bir şekilde silindi"
-// svg1.className="fill-current h-6 w-6 text-red-500"
-// span1.className="absolute top-0 bottom-0 right-0 px-4 py-3"
-// span1.appendChild(svg1);
-// div1.appendChild(strong1);
-// div1.appendChild(span1);
-// message_div.appendChild(div1);
-// console.log(message_div)
-
-
-
-// span.onclick=function(){this.parentElement.style.display='none';}
-// console.log(div)
-
-
-
-
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{% endblock  %}
-
-
-{% endblock content %}
-
-
-
-
-
-
-
-
-
-
-
-
-
+{% endblock %} {% endblock content %}
