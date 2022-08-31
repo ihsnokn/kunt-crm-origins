@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     'files',
     'lawyers',
     'compressor',
+    'django_extensions',
+    'django_quill',
 ]
 
 MIDDLEWARE = [
