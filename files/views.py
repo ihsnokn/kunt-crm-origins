@@ -183,8 +183,11 @@ def file_delete(request, pk):
         
         file.delete()
         path = settings.MEDIA_ROOT+"//class//" + str(pk)
-        for i in os.listdir(path):
-                os.remove( settings.MEDIA_ROOT + "/class/"+ str(pk)+ "/" +i)
+        try:
+            for i in os.listdir(path):                   
+                        os.remove( settings.MEDIA_ROOT + "/class/"+ str(pk)+ "/" +i)
+        except:
+            return redirect("/files")
         return redirect("/files")
     return render(request,"files/file_delete.html",{'file':file} )
 

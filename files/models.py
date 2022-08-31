@@ -30,7 +30,7 @@ class Lawyer(models.Model):
 
 
 class File(models.Model):
-    dosya_no = models.CharField(max_length=12,default="",blank=True)
+    dosya_no = models.CharField(max_length=30,default="",blank=True)
     basvuran = models.CharField(max_length=30)
 
     # basvurulan = models.CharField(max_length=30)
