@@ -1,0 +1,332 @@
+{% extends "base.html" %} {% block content %}
+
+<section class="text-gray-600 body-font overflow-hidden">
+  <div class="container px-5 py-24 pt-8 mx-auto border-2">
+    <div class="lg:w-4/5 mx-auto mt-0 flex flex-wrap">
+      <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
+        <h2 class="text-sm title-font text-gray-500 tracking-widest">
+          Dosya No
+        </h2>
+        <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">
+          {{file.dosya_no}}
+        </h1>
+        <div class="flex mb-4">
+          <a
+            href="{% url 'files:filedetail' file.id %}"
+            class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1"
+          >
+            Dosya Detayı
+          </a>
+
+          <a
+            href="{% url 'files:file-update' file.pk %}"
+            class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1"
+          >
+            Güncelle
+          </a>
+          <a
+            href="{% url 'files:file-update-fee' file.pk %}"
+            class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1"
+          >
+            Masraflar
+          </a>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" >
+          {% csrf_token %}
+
+          
+          <div class="mb-3">
+            <h4>MASRAFLAR</h4>
+          <label for="id_eksper_fee">Eksper Ücreti</label>
+            <div class="flex">
+          <input
+            class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-l-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+            type="number"
+            name="eksper_fee"
+            value="{{file_fee.eksper_fee}}"
+            step="0.01"
+            id="id_eksper_fee"
+          />
+          <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-r-md border border-l-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+            TL
+          </span>
+        </div>
+
+
+          <label for="id_dava_fee">Dava Ücreti</label>
+      <div class="flex">
+          <input
+            class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-l-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+            type="number"
+            name="dava_fee"
+            value="{{file_fee.dava_fee}}"
+            step="0.01"
+            id="id_dava_fee"
+          />
+          <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-r-md border border-l-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+            TL
+          </span>
+        </div>
+          <label for="id_bk_fee">Bk Ücreti</label>
+
+          <div class="flex">
+          <input
+            class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-l-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+            type="number"
+            name="bk_fee"
+            value="{{file_fee.bk_fee}}"
+            step="0.01"
+            id="id_bk_fee"
+          />
+          <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-r-md border border-l-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+            TL
+          </span>
+        </div>
+
+
+          <label for="id_islah_harci">Islah Harcı</label>
+    <div class="flex">
+          <input
+            class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-l-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+            type="number"
+            name="islah_harci"
+            value="{{file_fee.islah_harci}}"
+            step="0.01"
+            id="id_islah_harci"
+          />
+          <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-r-md border border-l-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+            TL
+          </span>
+        </div>
+
+          <div class="">
+            <div class="inline-block  mr-4">
+              <label for="id_karsi_vekalet_fee">Karşı Vekalet</label>
+
+              <div class="flex">
+
+              <input
+                class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block   appearance-none rounded-l-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+                type="number"
+                name="karsi_vekalet_fee"
+                value="{{file_fee.karsi_vekalet_fee}}"
+                step="0.01"
+                id="id_karsi_vekalet_fee"
+              />
+              <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-r-md border border-l-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                TL
+              </span>
+            </div>
+            </div>
+        
+          <div class="inline-block ">
+          
+            <label for="id_karsi_vekalet_date">Tarih</label>
+
+            <input
+                class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block  appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+              type="date"
+              value="{{file_fee.karsi_vekalet_date|date:"Y-m-d" }}"
+              name="karsi_vekalet_date"
+              id="id_karsi_vekalet_date"
+            />
+          </div>
+        </div>
+
+        </div>
+
+        <div>
+          <h4>GELEN ÖDEMELER</h4>
+
+
+          <div class="">
+            <div class="inline-block  mr-4">
+              <label for="id_davalidan_gelen_fee">Davalıdan Gelen</label>
+        <div class="flex">
+              <input
+                class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-l-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+                type="number"
+                name="davalidan_gelen_fee"
+                value="{{file_fee.davalidan_gelen_fee}}"
+                step="0.01"
+                id="id_davalidan_gelen_fee"
+              />
+              <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-r-md border border-l-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                TL
+              </span>
+            </div>
+            </div>
+          
+          <div class="inline-block ">
+          
+            <label for="id_davalidan_gelen_date">Tarih</label>
+
+            <input
+              class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+              type="date"
+              value="{{file_fee.davalidan_gelen_date|date:"Y-m-d" }}"
+              name="davalidan_gelen_date"
+              id="id_davalidan_gelen_date"
+            />
+  
+          </div>
+          </div>
+
+
+
+
+          <div class="">
+            <div class="inline-block  mr-4">
+              <label for="id_icradan_gelen_fee">İcradan Gelen</label>
+<div class="flex">
+              <input
+                class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-l-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+                type="number"
+                value="{{file_fee.icradan_gelen_fee}}"
+                name="icradan_gelen_fee"
+                step="0.01"
+                id="id_icradan_gelen_fee"
+              />
+              <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-r-md border border-l-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                TL
+              </span>
+            </div>
+            </div>
+          
+          <div class="inline-block ">
+            <label for="id_icradan_gelen_date">Tarih</label>
+
+            <input
+              class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+              type="date"
+              value="{{file_fee.icradan_gelen_date|date:"Y-m-d" }}"
+              name="icradan_gelen_date"
+              id="id_icradan_gelen_date"
+            />
+          </div>
+          </div>
+
+
+
+
+          <div class="">
+            <div class="inline-block  mr-4">
+          
+              <label for="id_muvekkile_gonderilen_fee"
+              >Müvekkile Gönderilen</label
+            >
+  <div class="flex">
+            <input
+              class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-l-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+              type="number"
+              value="{{file_fee.muvekkile_gonderilen_fee}}"
+              name="muvekkile_gonderilen_fee"
+              step="0.01"
+              id="id_muvekkile_gonderilen_fee"
+            />
+
+            <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-r-md border border-l-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+              TL
+            </span>
+          </div>
+            </div>
+          
+          <div class="inline-block ">
+          
+            <label for="id_muvekkile_gonderilen_date"
+            >Tarih</label
+          >
+          <input
+            class="focus:shadow-soft-primary-outline text-size-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"
+            type="date"
+            value="{{file_fee.muvekkile_gonderilen_date|date:"Y-m-d" }}"
+            name="muvekkile_gonderilen_date"
+            id="id_muvekkile_gonderilen_date"
+          />
+          </div>
+          </div>
+
+
+
+ 
+
+
+
+
+        </div>
+          <button type="submit" class="inline-block px-5 py-2 mr-3 mt-3 font-bold text-center text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-gradient-to-r from-red-500 to-purple-600  leading-pro text-size-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 hover:scale-102 active:opacity-85 hover:shadow-soft-xs">Masraf Yükle</button>
+
+        </form>
+        <a
+          href="{% url 'files:file-delete' file.pk %}"
+          class="w-1/3 mt-3 ml-auto inline-block px-5 py-2 mr-3 font-bold text-center text-align-center text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-gradient-to-r from-purple-600 to-red-500 leading-pro text-size-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 hover:scale-102 active:opacity-85 hover:shadow-soft-xs"
+        >
+          Dosyayı Sil
+        </a>
+      </div>
+
+
+      <div
+      class="container border-2 border-indigo-600 lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
+    >
+      {% if images %} {% for image in images %}
+
+      <br />
+      <a
+        href="{{image.image.url}}"
+        class="p-2 ml-auto text-gray-900"
+        target="_blank"
+        ><svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
+          /></svg>{{image.filename | truncatechars:45}}</a
+      >
+      {% endfor %} {% comment %}
+      <i
+        class="fa-solid fa-file-pdf ml-auto text-gray-900"
+        href="{{ file.dosya.url }}"
+        target="_blank"
+      ></i>
+      {% endcomment %} {% else %}
+      <span href="#" class="p-auto ml-auto text-gray-900">Dosya Yok</span>
+      {% endif %}
+    </div>
+
+
+
+
+
+
+
+    </div>
+  </div>
+</section>
+
+{% block scripts %} {% endblock %} {% endblock content %}
+
+
+
+
+
+
+
+<div class="py-2">
+  <div class="inline-block  mr-4">
+
+
+  </div>
+
+<div class="inline-block ">
+
+</div>
+</div>
