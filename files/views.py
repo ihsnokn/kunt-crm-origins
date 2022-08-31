@@ -182,7 +182,7 @@ def file_delete(request, pk):
     if request.method == "POST":
         
         file.delete()
-        path = settings.MEDIA_ROOT+"\\class\\" + str(pk)
+        path = settings.MEDIA_ROOT+"//class//" + str(pk)
         for i in os.listdir(path):
                 os.remove( settings.MEDIA_ROOT + "/class/"+ str(pk)+ "/" +i)
         return redirect("/files")
@@ -204,7 +204,6 @@ def FileDeleteUpdate(request):
         image= Image.objects.filter(id = i)
         img= Image.objects.filter(id = i).first()
         print(img.image)
-        # # path = settings.MEDIA_ROOT+ img.image
         os.remove( settings.MEDIA_ROOT + "//" + str(img.image))
         file= File.objects.filter(id=image[0].file_name.id)
         file.update(lawyer=lawyer)
