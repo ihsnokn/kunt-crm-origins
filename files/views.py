@@ -17,9 +17,10 @@ from django.http import JsonResponse
 from django.contrib import messages
 from .choises import SOURCE_CHOICES,BASVURU_CHOICES,DAVALI_CHOICES
 from django.conf import settings
+from . import models
 # CRUD create retrieve update delete + list
-
-
+from django.contrib.auth import get_user_model
+User = get_user_model()
 class SignUpView(generic.CreateView):
     template_name = "registration/signup.html"
     form_class = CustomUserCreationForm
@@ -99,6 +100,8 @@ def sign_out(request):
 # FILE UPDATE VIEW
 @login_required(login_url = "login")
 def FileUpdateView(request,pk):
+    user=User.objects.filter(id=request.user.id).first()
+    is_staff=user.is_staff
     update=True
     lawyer=Lawyer.objects.filter(user=request.user).first()
     file = get_object_or_404(File,id = pk)  
@@ -132,7 +135,7 @@ def FileUpdateView(request,pk):
         messages.warning(request,"Bir sorun oluştu!")
         return redirect("/files",{'note':note,'form_note':form_note,'file':file,'dosya_durumları':dosya_durumları,"lawyers":lawyers,"images": images,})
    
-    return render(request,"files/file_update.html",{'form_note':form_note,'file':file,'note':note,'form':form,'dosya_durumları':dosya_durumları,'davalılar':davalılar,"basvuru_konuları":basvuru_konuları,"lawyers":lawyers,"images": images} )
+    return render(request,"files/file_update.html",{"is_staff":is_staff,'form_note':form_note,'file':file,'note':note,'form':form,'dosya_durumları':dosya_durumları,'davalılar':davalılar,"basvuru_konuları":basvuru_konuları,"lawyers":lawyers,"images": images} )
 
 
 
@@ -140,7 +143,8 @@ def FileUpdateView(request,pk):
 
 @login_required(login_url = "login")
 def FileUpdateFeeView(request,pk):
-
+    user=User.objects.filter(id=request.user.id).first()
+    is_staff=user.is_staff
     lawyer=Lawyer.objects.filter(user=request.user).first()
     file = get_object_or_404(File,id = pk)
     file_fee = get_object_or_404(Masraflar,file_name = pk)
@@ -160,7 +164,7 @@ def FileUpdateFeeView(request,pk):
         messages.warning(request,"Bir sorun oluştu!")
         return redirect("/files",{'file':file,"lawyers":lawyers,"images": images,'file_fee':file_fee,})
    
-    return render(request,"files/file_fees.html",{'file_fee':file_fee,'file':file,'form':form,"lawyers":lawyers,"images": images,} )
+    return render(request,"files/file_fees.html",{"is_staff":is_staff,'file_fee':file_fee,'file':file,'form':form,"lawyers":lawyers,"images": images,} )
 
 
 
