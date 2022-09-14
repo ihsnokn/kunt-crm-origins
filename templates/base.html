@@ -29,7 +29,8 @@
   <link href="{% static 'css/table.css' %}" rel="stylesheet" />
 
 
-
+  {% include 'django_quill/media.html' %}
+  {{ form.media }}
 </head>
 
 <body class="zoom m-0 font-sans antialiased font-normal text-size-base leading-default bg-gray-50 text-slate-500">

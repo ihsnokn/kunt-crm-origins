@@ -49,6 +49,11 @@ class FileNoteForm(forms.ModelForm):
         error_messages = {
         }
 
+
+# class FileNoteForm(forms.Form):
+#     note = File_Notes()
+
+
 class FileForm(forms.Form):
     SOURCE_CHOICES = (
         # database name and display value respectively

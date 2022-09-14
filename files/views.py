@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, reverse,get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseRedirect, request
-from files.helper import classification_helper
+from files.helper import classification_helper,user_passes_test_helper
 from .models import File, File_Notes, Image, Lawyer, Masraflar
 from .forms import FileForm, FileModelForm, CustomUserCreationForm, FileNoteForm, ImageForm,FeeModelForm
 from django.views import generic
@@ -17,6 +17,10 @@ from django.http import JsonResponse
 from django.contrib import messages
 from .choises import SOURCE_CHOICES,BASVURU_CHOICES,DAVALI_CHOICES
 from django.conf import settings
+from . import models
+# CRUD create retrieve update delete + list
+from django.contrib.auth import get_user_model
+User = get_user_model()
 # CRUD create retrieve update delete + list
 
 
@@ -99,13 +103,15 @@ def sign_out(request):
 # FILE UPDATE VIEW
 @login_required(login_url = "login")
 def FileUpdateView(request,pk):
+    user=User.objects.filter(id=request.user.id).first()
+    is_staff=user.is_staff
     update=True
     lawyer=Lawyer.objects.filter(user=request.user).first()
     file = get_object_or_404(File,id = pk)  
     file_obj = File.objects.filter(id = pk).first()
     note = File_Notes.objects.filter(file=file_obj).first()
     form = FileModelForm()
-    form_note = FileNoteForm()
+    form_note = FileNoteForm(request.POST or None,instance = note)
     images = file.image_set.all()
     formimage=ImageForm(request.POST or None)
     dosya_durumları=SOURCE_CHOICES
@@ -117,7 +123,9 @@ def FileUpdateView(request,pk):
         name= form.data.get('dosya_no')
         form = FileModelForm(request.POST or None,instance = file)
         form_note = FileNoteForm(request.POST or None,instance = note)
+        
         print(form_note.errors)
+        print(form_note)
         if not (form.errors and form_note.errors):
             result=classification_helper(files,form,lawyer,update)
             if result == False:
@@ -132,7 +140,7 @@ def FileUpdateView(request,pk):
         messages.warning(request,"Bir sorun oluştu!")
         return redirect("/files",{'note':note,'form_note':form_note,'file':file,'dosya_durumları':dosya_durumları,"lawyers":lawyers,"images": images,})
    
-    return render(request,"files/file_update.html",{'form_note':form_note,'file':file,'note':note,'form':form,'dosya_durumları':dosya_durumları,'davalılar':davalılar,"basvuru_konuları":basvuru_konuları,"lawyers":lawyers,"images": images} )
+    return render(request,"files/file_update.html",{"is_staff":is_staff,'form_note':form_note,'file':file,'note':note,'form':form,'dosya_durumları':dosya_durumları,'davalılar':davalılar,"basvuru_konuları":basvuru_konuları,"lawyers":lawyers,"images": images} )
 
 
 
@@ -140,7 +148,8 @@ def FileUpdateView(request,pk):
 
 @login_required(login_url = "login")
 def FileUpdateFeeView(request,pk):
-
+    user=User.objects.filter(id=request.user.id).first()
+    is_staff=user.is_staff
     lawyer=Lawyer.objects.filter(user=request.user).first()
     file = get_object_or_404(File,id = pk)
     file_fee = get_object_or_404(Masraflar,file_name = pk)
@@ -160,7 +169,7 @@ def FileUpdateFeeView(request,pk):
         messages.warning(request,"Bir sorun oluştu!")
         return redirect("/files",{'file':file,"lawyers":lawyers,"images": images,'file_fee':file_fee,})
    
-    return render(request,"files/file_fees.html",{'file_fee':file_fee,'file':file,'form':form,"lawyers":lawyers,"images": images,} )
+    return render(request,"files/file_fees.html",{"is_staff":is_staff,'file_fee':file_fee,'file':file,'form':form,"lawyers":lawyers,"images": images,} )
 
 
 
@@ -176,7 +185,7 @@ def FileUpdateFeeView(request,pk):
 #                 os.remove( settings.MEDIA_ROOT + "/class/"+ str(pk)+ "/" +i)
 #         return reverse("files:file-list")
 
-
+@user_passes_test_helper(lambda u: u.is_staff)
 def file_delete(request, pk):
     file = File.objects.get(id=pk)
     if request.method == "POST":
@@ -198,7 +207,7 @@ def file_delete(request, pk):
 
 
 
-
+@login_required(login_url = "login")
 def FileDeleteUpdate(request):
     lawyer=Lawyer.objects.filter(user=request.user).first()
     file_array = json.loads(request.body)
