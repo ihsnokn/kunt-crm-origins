@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, reverse,get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseRedirect, request
-from files.helper import classification_helper
+from files.helper import classification_helper,user_passes_test_helper
 from .models import File, File_Notes, Image, Lawyer, Masraflar
 from .forms import FileForm, FileModelForm, CustomUserCreationForm, FileNoteForm, ImageForm,FeeModelForm
 from django.views import generic
@@ -169,6 +169,7 @@ def FileUpdateFeeView(request,pk):
 
 
 
+@user_passes_test_helper(lambda u: u.is_staff)
 def file_delete(request, pk):
     file = File.objects.get(id=pk)
     if request.method == "POST":
@@ -187,7 +188,7 @@ def file_delete(request, pk):
 
 
 
-
+@login_required(login_url = "login")
 def FileDeleteUpdate(request):
     lawyer=Lawyer.objects.filter(user=request.user).first()
     file_array = json.loads(request.body)
