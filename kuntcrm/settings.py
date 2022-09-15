@@ -173,6 +173,29 @@ COMPRESS_ENABLED = True
 STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
 
 
+QUILL_CONFIGS = {
+    'default':{
+        'theme': 'snow',
+        'modules': {
+            'syntax': True,
+            'toolbar': [
+                [
+                    {'font': []},
+                    {'header': []},
+                    {'align': []},
+                    'bold', 'italic', 'underline', 'strike', 'blockquote',
+                    {'color': []},
+                    {'background': []},
+                ],
+                ['code-block', 'link'],
+                ['clean'],
+            ]
+        }
+    }
+}
+
+
+
 
 if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -266,13 +289,13 @@ if not DEBUG:
 # SECRET_KEY = env('SECRET_KEY')
 
 
-# # Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent
 
-# #ALLOWED_HOSTS = ['kunt-crm-b78t7.ondigitalocean.app', '127.0.0.1']
+# ALLOWED_HOSTS = ['kunt-crm-b78t7.ondigitalocean.app', '127.0.0.1']
 
 
-# # Application definition
+# Application definition
 
 # INSTALLED_APPS = [
 #     "whitenoise.runserver_nostatic",
@@ -334,8 +357,8 @@ if not DEBUG:
 # WSGI_APPLICATION = 'kuntcrm.wsgi.application'
 
 
-# # Database
-# # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+# Database
+# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 # DATABASES = {
 #     'default': {
@@ -348,22 +371,22 @@ if not DEBUG:
 #     }
 # }
 
-# # DATABASES = {
-# #     'default': {
-# #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-# #         'NAME': 'database ismi',
-# #         'USER': 'postgres',
-# #         'PASSWORD':'şifre',
-# #         'HOST':'localhost',
-# #         'PORT':'5432'
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'database ismi',
+#         'USER': 'postgres',
+#         'PASSWORD':'şifre',
+#         'HOST':'localhost',
+#         'PORT':'5432'
 
-# #     }
-# # }
+#     }
+# }
 
 
 
-# # Password validation
-# # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
+# Password validation
+# https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
 # AUTH_PASSWORD_VALIDATORS = [
 #     {
@@ -381,8 +404,8 @@ if not DEBUG:
 # ]
 
 
-# # Internationalization
-# # https://docs.djangoproject.com/en/4.0/topics/i18n/
+# Internationalization
+# https://docs.djangoproject.com/en/4.0/topics/i18n/
 
 # LANGUAGE_CODE = 'en-us'
 
@@ -393,8 +416,8 @@ if not DEBUG:
 # USE_TZ = True
 
 
-# # Static files (CSS, JavaScript, Images)
-# # https://docs.djangoproject.com/en/4.0/howto/static-files/
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 # STATIC_URL = '/static/'
 
@@ -410,14 +433,14 @@ if not DEBUG:
 
 # MEDIA_URL = '/media/'
 
-# # Default primary key field type
-# # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
+# Default primary key field type
+# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 # DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # AUTH_USER_MODEL = 'files.User'
 
-# # MAIL TERMINALE LOGLANDI
+# MAIL TERMINALE LOGLANDI
 # EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # LOGIN_REDIRECT_URL = "/files"
@@ -425,10 +448,10 @@ if not DEBUG:
 # LOGIN_URL = "/login"
 
 
-# # AUTH PERMISSIONS
+# AUTH PERMISSIONS
 
 
-# # COMPRESS_ROOT
+# COMPRESS_ROOT
 
 # COMPRESS_ROOT = BASE_DIR / 'static'
 
